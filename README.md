@@ -8,7 +8,7 @@ I am an undergraduate research assistant at Duke University's Cyber-Physical Sys
 
 | Path | What's in it |
 |---|---|
-| [PROGRESS.md](PROGRESS.md) | Dated log of what I've done |
+| [PROGRESS.md](PROGRESS.md) | Progress bars + dated log |
 | [notes/](notes/) | One file per lesson: what I learned, in my own words, plus check questions I got wrong and why |
 | [code/](code/) | Scripts I wrote or ran for the lessons |
 
