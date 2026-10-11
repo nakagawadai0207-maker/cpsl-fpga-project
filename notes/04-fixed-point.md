@@ -49,5 +49,5 @@ Integers from the ADC go to the FPGA, which does lots of integer math in paralle
 - Thought the FPGA is faster *because* integers are cheap. The speed comes from parallelism; cheap integers are what allow that much parallelism.
 - Added in the stage-1 values wrong (got 1.5 instead of 1.0).
 - Read 65,534 as the real part. That's the unsigned reading; the signed value is −2.
-- Divided by 2^16 for Q1.15. It's 2^15, because one bit is the sign.
+- First divided by 2^16 for Q1.15 (fixed it myself: it's 2^15, because one bit is the sign).
 - Mixed the input value into the leftover-growth calculation. Leftover growth depends only on FFT size ÷ division.
