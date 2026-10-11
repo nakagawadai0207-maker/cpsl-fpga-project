@@ -17,7 +17,7 @@ The ADC samples the beat tone at a fixed rate, like seeing a spinning fan only u
 Warm-up: 2.0 m → 2.0 m (under the limit, no wrap); 5.0 m → 1.07 m.
 
 ## My predictions
-- **A:** 4.5 − 3.93 = 0.57 m ✅
+- **A:** 4.5 − 3.93 = 0.57 m. Ran it: peak at 0.57 m ✅
 - **B:** _TBD_
 - **C:** _TBD_
 
