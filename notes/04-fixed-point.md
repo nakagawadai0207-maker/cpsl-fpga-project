@@ -30,8 +30,24 @@ Integers from the ADC go to the FPGA, which does lots of integer math in paralle
   - 1024-point with ÷32 → 32× → inputs under 1/32 (about 1,024).
 - **The price of dividing:** each ÷2 chops off a bit. A weak target whose true output is 40 becomes 0 after ÷64, and multiplying back can't recover it. This is the core fixed-point trade-off: divide too little and you overflow; divide too much and weak signals vanish.
 
+## Packing a complex sample into one 32-bit word
+- AXI-Stream is 32 bits wide, so one complex sample (two int16 values) travels in one clock.
+- The lab layout (`fpga_fft.py`) puts the imaginary part in bits 31–16 and the real part in bits 15–0.
+- Pack: word = imag × 65,536 + real, i.e. `(imag << 16) | (real & 0xFFFF)`. Example: 2 + 7j → 458,754.
+- Unpack: imag = `word >> 16`, real = `word & 0xFFFF`. Example: 196,609 = 3 × 65,536 + 1 → 1 + 3j.
+- **Signed vs unsigned:** bits have no type; "signed" is an agreement between both sides. `& 0xFFFF` gives the *unsigned* reading, so you have to reinterpret it as int16 (the lab code does `.astype(np.uint16).astype(np.int16)`).
+  - If unsigned ≥ 32,768, then signed = unsigned − 65,536. Examples: 65,534 → −2, and 40,000 → −25,536.
+  - The top bit is worth −32,768: `1000 0000 0000 0001` = −32,767, not −1.
+
+## 14-bit ADC samples in 16-bit slots
+- Top-aligned (MSB-aligned) means shifting left 2 (× 4), so the bottom 2 bits are always 0. AMD RFSoC ADCs and the lab's radar simulator use this.
+- Why: read as Q1.15, full scale is about ±1 whatever the ADC's bit count.
+- Example: a 14-bit reading of 1,000 → 4,000 as int16 → 4,000 ÷ 32,768 ≈ 0.122 (= 1,000 ÷ 8,192).
+
 ## Mistakes I made
 - Said "chop 15 bits" to read 24,576's value. Chopping gives 0; reading a value means dividing.
 - Thought the FPGA is faster *because* integers are cheap. The speed comes from parallelism; cheap integers are what allow that much parallelism.
 - Added in the stage-1 values wrong (got 1.5 instead of 1.0).
+- Read 65,534 as the real part. That's the unsigned reading; the signed value is −2.
+- Divided by 2^16 for Q1.15. It's 2^15, because one bit is the sign.
 - Mixed the input value into the leftover-growth calculation. Leftover growth depends only on FFT size ÷ division.

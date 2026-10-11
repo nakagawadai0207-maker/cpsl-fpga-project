@@ -8,8 +8,8 @@
 | 2026-10-09 | **Lesson 1 done:** FPGA mental model (PS/PL, AXI-Lite vs AXI-Stream, DMA) |
 | 2026-10-09 → 10-11 | **Lesson 2 done:** complex numbers, the FFT as a tuning dial, FMCW chirp → beat frequency, range resolution |
 | 2026-10-11 | **Lesson 3 done:** aliasing (4.5 m target shows at 0.57 m), resolution vs. FFT size, choosing an FFT size. Learned to run Python scripts from PowerShell |
-| 2026-10-11 | **Lesson 4 in progress:** two's complement, Q1.15 fixed point, FFT overflow and scaling |
+| 2026-10-11 | **Lesson 4 done:** two's complement, Q1.15 fixed point, FFT overflow and scaling, packing complex samples, MSB-aligned ADC samples |
 
 ## Up next
-- Lesson 4 part 4: packing complex samples into 32-bit words
+- Verilog basics (H&H ch 1–2 + HDLBits), then Lesson 5: the AXI-Stream handshake
 - Harris & Harris ch 1 + HDLBits (running in parallel)
