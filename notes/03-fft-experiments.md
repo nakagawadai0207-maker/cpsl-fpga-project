@@ -35,8 +35,26 @@ Warm-up: 2.0 m → 2.0 m (under the limit, no wrap); 5.0 m → 1.07 m.
 ADC sample rate is a different knob: it sets the max range (3.93 m), not the resolution.
 
 ## What actually happened
-_TBD_
+- **A:** peak at 0.57 m (the real target was at 4.5 m). ✅
+- **B:** one peak, at both FFT 64 and 1024. ✅
+- **C:** two peaks, at 1.0 m and 1.2 m. ✅
+
+## Choosing an FFT size
+N = the bigger of (3.93 m ÷ spacing you want) and the sample count (63), rounded up to a power of 2.
+- 2 cm spacing → 196.5 → 256
+- 0.5 cm → 786 → 1024
+- 20 cm → 19.7, but that's below 63 samples → 64. A 32-point FFT would throw away half the samples, which means half the bandwidth and 12.5 cm resolution.
+
+## Where the numbers come from
+The radar config (TI IWR6843) sets 63 samples at 2.1 MHz.
+- Sample rate sets max range: 3.94 m.
+- 63 ÷ 2.1 MHz = 30 µs of sampling. At 80 MHz/µs that's 2.4 GHz of bandwidth, which gives 6.25 cm resolution.
+
+Sampling faster with the same count sees farther but sweeps less bandwidth, so resolution gets coarser.
 
 ## Mistakes I made
 - Subtracted 3.93 from a target that was already under the limit (2.0 m). Only wrap when distance > 3.93 m.
 - Thought a bigger FFT makes the peak wider. It makes it smoother; the width is set by bandwidth.
+- Divided 3.93 by 0.05 for 0.5 cm. 0.5 cm = 0.005 m.
+- Forgot the minimum (FFT size ≥ sample count) and said 32 for 20 cm spacing.
+- Thought "samples" meant objects. Samples are the 63 voltage measurements per chirp.
