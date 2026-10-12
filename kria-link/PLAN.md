@@ -120,7 +120,8 @@ Each lesson is taught in chat in small chunks with a check after each one, then 
 - **Ask the lab for:** the KR260 power supply, USB cable and microSD card, and a multimeter.
 - **Pin safety:** PMOD pins are 3.3 V. Never connect one to 5 V, and never wire two outputs together.
 
-### K7. Your first bitstream on one Kria 🔧
+### K7. Your first bitstream on one Kria
+- **Step-by-step for the first visit:** [LAB-DAY-1.md](LAB-DAY-1.md) 🔧
 - The Vivado flow: project → RTL or block design → constraints → synthesize → implement → bitstream → load it on the board
 - **Do:** blink an LED on one Kria. This proves your tool flow before two boards are involved.
 - **Then wire something:** one jumper wire from one PMOD pin to another on the same board. The FPGA drives the first pin and reads the second back onto an LED. Pull the wire and the LED stops following. This is the first real wiring.
