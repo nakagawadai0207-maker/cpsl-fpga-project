@@ -36,6 +36,8 @@
 - The sender transmits its own clock beside the data. Clock and data share the same delay, so edges stay lined up at the receiver: up to 900 Mb/s per lane.
 - **Frame clock** marks the first bit of every sample (SPI's CS only marks the start of a transaction).
 - DDR + LVDS pairs.
+- **LVDS itself is not a protocol.** It's an electrical standard (a bit = P − N = ±0.35 V). The protocol is source-synchronous (bit clock + frame clock + data lanes), and it runs on LVDS pairs.
+- A **protocol** = the rules both sides follow: which wires, how timing works, how framing works. Real systems use several at once: UART for radar settings, the LVDS link for samples, I²C for helper chips on the board.
 
 | | Wires | Timing | Framing | Speed | Used for |
 |---|---|---|---|---|---|
