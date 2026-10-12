@@ -8,12 +8,12 @@
 | A: Foundations (L0–L7, L5b, L5c) | `█████░░░░░` | 5 / 10 |
 | B: Capstones (L11–L14) | `░░░░` | 0 / 4 |
 | C: On the real board (L8–L10) | `░░░` | 0 / 3 |
-| **Ready for the lab** (K1, K2, K3, K4 counter, Vivado ready on lab PC or laptop, parts ✓ lab has them) | `████░░` | 4 / 6 |
+| **Ready for the lab** (K1, K2, K3, K4 counter, Vivado ready on lab PC or laptop, parts ✓ lab has them) | `█████░` | 5 / 6 |
 | **Kria-to-Kria link (K1–K11)**, [plan](kria-link/PLAN.md) | `███░░░░░░░░` | 3 / 11, current focus |
 | **Harris & Harris ch 1–4** (needed before Lesson 5) | `░░░░` | paused; the needed sections are pulled into K3–K4 |
 
 Done: L0 setup · L1 FPGA mental model · L2 radar math · L3 FFT experiments · L4 fixed point
-Kria link done: [K1 LVDS](kria-link/K1-lvds.md) · [K2 serial protocols](kria-link/K2-serial-protocols.md) · [K3 flip-flops, counters, shift registers](kria-link/K3-flipflops-counters-shift.md)
+Kria link done: [K1 LVDS](kria-link/K1-lvds.md) · [K2 serial protocols](kria-link/K2-serial-protocols.md) · [K3 flip-flops, counters, shift registers](kria-link/K3-flipflops-counters-shift.md) · [K4 part 1: Verilog counter](kria-link/K4-verilog-counter.md)
 Now: **Kria-to-Kria link** sub-project (two boards talking over LVDS, LED on). Main lessons and full H&H paused.
 
 ## Log
@@ -32,8 +32,9 @@ Now: **Kria-to-Kria link** sub-project (two boards talking over LVDS, LED on). M
 | 2026-10-12 | **K1 done:** LVDS (P − N, noise cancelling, 100 Ω termination, the radar's 4 pairs, DDR clock, bit alignment) |
 | 2026-10-12 | **K2 done:** serial protocols (timing vs framing; UART, SPI, I²C, source-synchronous LVDS) |
 | 2026-10-12 | **K3 done:** flip-flops, counters (LED blink math), shift registers (serial receiver = shift register + counter) |
+| 2026-10-12 | **K4 part 1 done:** Verilog module/ports, reg, always/<=, assign. Wrote the loopback design's assign lines. Ready for the lab: 5/6 |
 
 ## Up next
-- K4 (counter part): a counter in Verilog, then first lab visit (blink + loopback wire)
+- First lab visit (2026-10-13): open Vivado on the lab PC, blink, loopback wire
 - Verilog basics (H&H ch 1–2 + HDLBits), then Lesson 5: the AXI-Stream handshake
 - Harris & Harris ch 1 + HDLBits (running in parallel)
