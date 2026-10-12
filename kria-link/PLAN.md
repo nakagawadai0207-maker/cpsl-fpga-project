@@ -22,6 +22,31 @@ Each lesson below covers one piece of this picture.
 
 ---
 
+## The two goals every lesson must serve
+
+1. **Remove the DCA1000.** To replace it, the Kria has to do every job the DCA1000 does today, plus hand the data on:
+   - **a. Receive** the radar's LVDS lanes: K1, K2, K5, K6, K8, K9
+   - **b. Rebuild samples** from the bits (frame clock, bit alignment): K5, K9
+   - **c. Get the samples into memory** where software and Person A's processing can use them: K10
+   - **d. Configure and start the radar.** TI's demo firmware takes its settings as text commands over UART, the same settings as `radar_config.py`. K2 introduces UART; K11 uses it.
+2. **Understand how FPGAs fit into systems in general.** Almost every FPGA product has the same shape: **pins → custom logic (PL) → a standard bus (AXI) → memory → a processor running software (PS)**. K1–K9 cover the pins and logic. K10–K11 cover the bus, memory and software. The same shape shows up in quantum control hardware (FPGA logic driving DACs, a CPU running the experiment) and in chip test setups.
+
+| Lesson | DCA1000 job | General FPGA skill |
+|---|---|---|
+| K1 LVDS | a | high-speed I/O standards |
+| K2 serial protocols | a, d | every chip-to-chip interface |
+| K3 flip-flops, counters, shift registers | b | the parts every design is built from |
+| K4 Verilog | all | writing hardware |
+| K5 link in simulation | a, b | verify before hardware |
+| K6 pins in Vivado | a | constraints, I/O banks |
+| K7 first bitstream | all | the tool flow |
+| K8 two boards + ILA | a | bring-up and debugging |
+| K9 IDDR/ISERDES | a, b | fast interfaces, clock domains |
+| K10 AXI + DMA | c | how logic talks to the processor |
+| K11 whole system | c, d | Linux/PYNQ talking to your hardware |
+
+---
+
 ## One hardware fact that decides a lot
 
 The FPGA's pins are grouped into **banks**, and the bank type decides what a pin can do. These facts come from the AMD docs listed at the bottom:
@@ -103,6 +128,17 @@ Each lesson is taught in chat in small chunks with a check after each one, then 
 - Going faster: **IDDR** (capture on both clock edges, needed for the radar's DDR clock) and **ISERDES** (hardware deserializer). Clock-domain crossing comes in here too; this is main-plan Lesson 5c.
 - **Bit alignment:** using the frame clock to find where each sample starts
 - Map the radar's real LVDS pins (2 lanes, DDR clock, frame clock) onto your K8 receiver. That's the start of replacing the DCA1000.
+
+### K10. Into memory: AXI-Stream and DMA 💻🔧
+- The Kria chip is two halves: **PL** (the FPGA logic you write) and **PS** (4 ARM cores running Linux). They connect through **AXI** buses.
+- **AXI-Stream:** a data wire plus two handshake wires, `valid` (sender has data) and `ready` (receiver can take it). A word moves only when both are 1. This is main-plan Lesson 5.
+- **DMA:** a block that copies an AXI-Stream into DDR memory without the CPU touching each word.
+- **Do:** in simulation, wrap your K9 receiver output as AXI-Stream. On the board, send a counter pattern through AXI DMA into memory and read it in Python (PYNQ), checking that no number is missing.
+
+### K11. The whole system: radar to software, no DCA1000 🔧
+- Configure the radar from the Kria over UART (the same settings as `radar_config.py`), start it, receive the LVDS (K9), move the samples into memory (K10), and read one frame in Python.
+- Check the result against what you already know from Lesson 3: a target at 1.0 m should show a peak at 1.0 m.
+- That frame is what Person A's processing consumes, which closes the loop from radar to result with no DCA1000.
 
 ---
 

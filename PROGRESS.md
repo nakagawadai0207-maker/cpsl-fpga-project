@@ -8,7 +8,7 @@
 | A: Foundations (L0–L7, L5b, L5c) | `█████░░░░░` | 5 / 10 |
 | B: Capstones (L11–L14) | `░░░░` | 0 / 4 |
 | C: On the real board (L8–L10) | `░░░` | 0 / 3 |
-| **Kria-to-Kria link (K1–K9)**, [plan](kria-link/PLAN.md) | `░░░░░░░░░` | 0 / 9, current focus |
+| **Kria-to-Kria link (K1–K11)**, [plan](kria-link/PLAN.md) | `░░░░░░░░░░░` | 0 / 11, current focus |
 | **Harris & Harris ch 1–4** (needed before Lesson 5) | `░░░░` | paused; the needed sections are pulled into K3–K4 |
 
 Done: L0 setup · L1 FPGA mental model · L2 radar math · L3 FFT experiments · L4 fixed point
