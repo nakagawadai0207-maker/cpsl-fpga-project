@@ -34,7 +34,11 @@ The FPGA's pins are grouped into **banks**, and the bank type decides what a pin
 - **KR260 starter kit:** the PMOD connectors are 3.3 V, which means HD banks, since HP banks max out at 1.8 V. So a PMOD **can't transmit true LVDS**. The KR260 user guide lists its HP banks HPA and HPB for the Ethernet ports, and I haven't found HP pins on any of its user headers.
 - **The CPSL custom K26 carrier** (`cpsl-research/kria-k26-CPSL`, branch `lvds_and_can`): it adds two Samtec 60-pin connectors, the same family as the radar ribbon cable. It has LVDS nets named after the radar's pins (4 data, clock, frame clock, valid) and 7 differential pairs each on banks **HPA** and **HPC**. HP banks, so it can do real LVDS both ways.
 
-> **Ask Person B:** "Which boards are we linking, two KR260s or the CPSL carriers, and through which connector?" Lessons 1–5 don't depend on the answer. Lesson 6 does.
+> **Answer so far (2026-10-12):** two KR260s, connector unknown. With two KR260s, the user headers (PMOD, Raspberry Pi) can't *send* true LVDS. So the plan is:
+> 1. Build the link single-ended (`LVCMOS33`) PMOD to PMOD. The logic is identical to the LVDS version (K5), only the pin standard differs.
+> 2. Move to true LVDS on the CPSL carrier, which has HP banks wired for it.
+>
+> **Ask Person B:** "The KR260's PMOD and Pi headers are 3.3 V HD banks, which can't transmit LVDS. Did you mean two KR260s over single-ended pins first, or the CPSL carrier with the Samtec LVDS connectors?"
 
 ---
 
