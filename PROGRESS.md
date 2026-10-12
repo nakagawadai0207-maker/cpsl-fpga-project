@@ -8,12 +8,12 @@
 | A: Foundations (L0–L7, L5b, L5c) | `█████░░░░░` | 5 / 10 |
 | B: Capstones (L11–L14) | `░░░░` | 0 / 4 |
 | C: On the real board (L8–L10) | `░░░` | 0 / 3 |
-| **Ready for the lab** (K1, K2, K3, K4 counter, Vivado ready on lab PC or laptop, parts ✓ lab has them) | `███░░░` | 3 / 6 |
-| **Kria-to-Kria link (K1–K11)**, [plan](kria-link/PLAN.md) | `██░░░░░░░░░` | 2 / 11, current focus |
+| **Ready for the lab** (K1, K2, K3, K4 counter, Vivado ready on lab PC or laptop, parts ✓ lab has them) | `████░░` | 4 / 6 |
+| **Kria-to-Kria link (K1–K11)**, [plan](kria-link/PLAN.md) | `███░░░░░░░░` | 3 / 11, current focus |
 | **Harris & Harris ch 1–4** (needed before Lesson 5) | `░░░░` | paused; the needed sections are pulled into K3–K4 |
 
 Done: L0 setup · L1 FPGA mental model · L2 radar math · L3 FFT experiments · L4 fixed point
-Kria link done: [K1 LVDS](kria-link/K1-lvds.md) · [K2 serial protocols](kria-link/K2-serial-protocols.md)
+Kria link done: [K1 LVDS](kria-link/K1-lvds.md) · [K2 serial protocols](kria-link/K2-serial-protocols.md) · [K3 flip-flops, counters, shift registers](kria-link/K3-flipflops-counters-shift.md)
 Now: **Kria-to-Kria link** sub-project (two boards talking over LVDS, LED on). Main lessons and full H&H paused.
 
 ## Log
@@ -31,8 +31,9 @@ Now: **Kria-to-Kria link** sub-project (two boards talking over LVDS, LED on). M
 | 2026-10-12 | Started the Kria-to-Kria link sub-project (helping a labmate replace the DCA1000 capture board). Paused full H&H read-through. |
 | 2026-10-12 | **K1 done:** LVDS (P − N, noise cancelling, 100 Ω termination, the radar's 4 pairs, DDR clock, bit alignment) |
 | 2026-10-12 | **K2 done:** serial protocols (timing vs framing; UART, SPI, I²C, source-synchronous LVDS) |
+| 2026-10-12 | **K3 done:** flip-flops, counters (LED blink math), shift registers (serial receiver = shift register + counter) |
 
 ## Up next
-- K3: flip-flops, counters, shift registers
+- K4 (counter part): a counter in Verilog, then first lab visit (blink + loopback wire)
 - Verilog basics (H&H ch 1–2 + HDLBits), then Lesson 5: the AXI-Stream handshake
 - Harris & Harris ch 1 + HDLBits (running in parallel)
