@@ -10,6 +10,7 @@ I am an undergraduate research assistant at Duke University's Cyber-Physical Sys
 |---|---|
 | [PROGRESS.md](PROGRESS.md) | Progress bars + dated log |
 | [notes/](notes/) | One file per lesson: what I learned, in my own words, plus check questions I got wrong and why |
+| [kria-link/](kria-link/) | Sub-project: two Krias talking over LVDS ([plan](kria-link/PLAN.md)) |
 | [code/](code/) | Scripts I wrote or ran for the lessons |
 
 ## The path
