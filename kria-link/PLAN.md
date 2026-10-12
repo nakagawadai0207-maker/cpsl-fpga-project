@@ -115,7 +115,8 @@ Each lesson is taught in chat in small chunks with a check after each one, then 
 ### Before K7: get ready for the lab 💻
 - **Install Vivado on your laptop.** Free edition (Vivado ML Standard), the **same version as the lab PC (2025.2)**. In the installer, select only the **Zynq UltraScale+** device family. Check first: tens of GB of free disk, ideally 16 GB+ RAM.
 - **Test the install:** create an empty project for the K26 and run synthesis on a 1-line design. If that works, the tools are ready.
-- **Parts:** jumper wires (have), a few LEDs, 330 Ω resistors, a small breadboard. Ask the lab first; otherwise a beginner electronics kit.
+- **Parts:** jumper wires (have). David confirmed 2026-10-12 the lab has breadboards, LEDs and resistors.
+- **Vivado for the first visit:** the lab PC already has it, so the laptop install can come later.
 - **Ask the lab for:** the KR260 power supply, USB cable and microSD card, and a multimeter.
 - **Pin safety:** PMOD pins are 3.3 V. Never connect one to 5 V, and never wire two outputs together.
 

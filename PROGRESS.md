@@ -8,7 +8,7 @@
 | A: Foundations (L0–L7, L5b, L5c) | `█████░░░░░` | 5 / 10 |
 | B: Capstones (L11–L14) | `░░░░` | 0 / 4 |
 | C: On the real board (L8–L10) | `░░░` | 0 / 3 |
-| **Ready for the lab** (K1, K2, K3, K4 counter, Vivado installed + tested, parts in hand) | `██░░░░` | 2 / 6 |
+| **Ready for the lab** (K1, K2, K3, K4 counter, Vivado ready on lab PC or laptop, parts ✓ lab has them) | `███░░░` | 3 / 6 |
 | **Kria-to-Kria link (K1–K11)**, [plan](kria-link/PLAN.md) | `██░░░░░░░░░` | 2 / 11, current focus |
 | **Harris & Harris ch 1–4** (needed before Lesson 5) | `░░░░` | paused; the needed sections are pulled into K3–K4 |
 
