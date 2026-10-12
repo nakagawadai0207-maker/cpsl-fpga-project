@@ -115,6 +115,8 @@ Each lesson is taught in chat in small chunks with a check after each one, then 
 ### K7. Your first bitstream on one Kria 🔧
 - The Vivado flow: project → RTL or block design → constraints → synthesize → implement → bitstream → load it on the board
 - **Do:** blink an LED on one Kria. This proves your tool flow before two boards are involved.
+- **Then wire something:** one jumper wire from one PMOD pin to another on the same board. The FPGA drives the first pin and reads the second back onto an LED. Pull the wire and the LED stops following. This is the first real wiring.
+- **Order (changed 2026-10-12, Dai wants lab time early):** do K7 right after K3 plus the counter part of K4, before K5. The blink is just a counter driving an LED.
 - Reuses the lab's existing tutorials (`CPSL_Manuals/Kria Board`), = Part C lessons L8–L9 of the main plan.
 
 ### K8. Two boards, one link 🔧
