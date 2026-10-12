@@ -8,10 +8,11 @@
 | A: Foundations (L0–L7, L5b, L5c) | `█████░░░░░` | 5 / 10 |
 | B: Capstones (L11–L14) | `░░░░` | 0 / 4 |
 | C: On the real board (L8–L10) | `░░░` | 0 / 3 |
-| **Kria-to-Kria link (K1–K11)**, [plan](kria-link/PLAN.md) | `░░░░░░░░░░░` | 0 / 11, current focus |
+| **Kria-to-Kria link (K1–K11)**, [plan](kria-link/PLAN.md) | `█░░░░░░░░░░` | 1 / 11, current focus |
 | **Harris & Harris ch 1–4** (needed before Lesson 5) | `░░░░` | paused; the needed sections are pulled into K3–K4 |
 
 Done: L0 setup · L1 FPGA mental model · L2 radar math · L3 FFT experiments · L4 fixed point
+Kria link done: [K1 LVDS](kria-link/K1-lvds.md)
 Now: **Kria-to-Kria link** sub-project (two boards talking over LVDS, LED on). Main lessons and full H&H paused.
 
 ## Log
@@ -27,7 +28,9 @@ Now: **Kria-to-Kria link** sub-project (two boards talking over LVDS, LED on). M
 | 2026-10-11 | **Lesson 4 done:** two's complement, Q1.15 fixed point, FFT overflow and scaling, packing complex samples, MSB-aligned ADC samples |
 | 2026-10-11 | Started Harris & Harris ch 1 |
 | 2026-10-12 | Started the Kria-to-Kria link sub-project (helping a labmate replace the DCA1000 capture board). Paused full H&H read-through. |
+| 2026-10-12 | **K1 done:** LVDS (P − N, noise cancelling, 100 Ω termination, the radar's 4 pairs, DDR clock, bit alignment) |
 
 ## Up next
+- K2: serial protocols (UART, SPI, I²C, source-synchronous LVDS)
 - Verilog basics (H&H ch 1–2 + HDLBits), then Lesson 5: the AXI-Stream handshake
 - Harris & Harris ch 1 + HDLBits (running in parallel)
