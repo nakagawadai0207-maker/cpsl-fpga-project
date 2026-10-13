@@ -4,6 +4,8 @@
 
 **Why it matters:** this is the first step toward plugging the TI radar straight into a Kria. Today the chain is radar → DCA1000 capture board → Ethernet → PC. The goal is radar → Kria.
 
+**Dai's two goals (restated 2026-10-13):** (1) eliminate the DCA1000, and (2) learn how to **hardware-accelerate** a computation, in a way that carries over to future projects. Every lesson below serves one or both.
+
 ---
 
 ## The whole system, before anything else
@@ -29,7 +31,7 @@ Each lesson below covers one piece of this picture.
    - **b. Rebuild samples** from the bits (frame clock, bit alignment): K5, K9
    - **c. Get the samples into memory** where software and Person A's processing can use them: K10
    - **d. Configure and start the radar.** TI's demo firmware takes its settings as text commands over UART, the same settings as `radar_config.py`. K2 introduces UART; K11 uses it.
-2. **Understand how FPGAs fit into systems in general.** Almost every FPGA product has the same shape: **pins → custom logic (PL) → a standard bus (AXI) → memory → a processor running software (PS)**. K1–K9 cover the pins and logic. K10–K11 cover the bus, memory and software. The same shape shows up in quantum control hardware (FPGA logic driving DACs, a CPU running the experiment) and in chip test setups.
+2. **Learn hardware acceleration, transferable to future projects.** Accelerating means moving a heavy computation (an FFT, backprojection) off the processor and into custom PL logic. It always uses the same loop: **memory → DMA → your compute block → DMA → memory**, with software starting it and reading the result. That loop is built from the system shape below, so goal 2 needs K4–K5 (writing logic), K10 (AXI, DMA) and K12 (the loop itself). Almost every FPGA product has the same shape: **pins → custom logic (PL) → a standard bus (AXI) → memory → a processor running software (PS)**. K1–K9 cover the pins and logic. K10–K11 cover the bus, memory and software. The same shape shows up in quantum control hardware (FPGA logic driving DACs, a CPU running the experiment) and in chip test setups.
 
 | Lesson | DCA1000 job | General FPGA skill |
 |---|---|---|
@@ -45,6 +47,7 @@ Each lesson below covers one piece of this picture.
 | K7b AXI GPIO | c (first step) | software controlling hardware |
 | K10 AXI + DMA | c | how logic talks to the processor |
 | K11 whole system | c, d | Linux/PYNQ talking to your hardware |
+| K12 first accelerator | (Person A's side) | the acceleration loop: memory → DMA → compute → DMA → memory, timed against Python |
 
 ---
 
@@ -180,6 +183,13 @@ Each lesson is taught in chat in small chunks with a check after each one, then 
 - Configure the radar from the Kria over UART (the same settings as `radar_config.py`), start it, receive the LVDS (K9), move the samples into memory (K10), and read one frame in Python.
 - Check the result against what you already know from Lesson 3: a target at 1.0 m should show a peak at 1.0 m.
 - That frame is what Person A's processing consumes, which closes the loop from radar to result with no DCA1000.
+
+### K12. Your first hardware accelerator 🔧 (added 2026-10-13, goal 2)
+- **The loop:** Python puts data in memory → DMA reads it out as a stream (`M_AXIS_MM2S`) → your compute block → DMA writes the result back (`S_AXIS_S2MM`) → Python reads it. Person B's `axi_dma_0` already has both directions, so K12 adds the compute block in the middle.
+- **First compute block: an FFT.** It ties to what you know: Lesson 3 (FFT size, aliasing) and Lesson 4 (fixed point, ÷16 scaling). Use AMD's FFT IP first, then compare against the lab's `fpga_fft.py` model (256-point, radix-4).
+- **Measure:** time it against NumPy on the Kria's ARM cores, and count FPGA resources (DSPs, BRAM) in Vivado's utilization report. Accelerating is only worth it if the numbers say so, and learning to check that is the transferable part.
+- **Then the real target:** main-plan capstones L11–L13: backprojection (the radar imaging step worth accelerating), sizing (does it fit on the chip?) and bit widths. They're paused; K12 is where they rejoin.
+- Same loop, different block, in other fields: quantum control (FPGA logic shaping pulses for DACs), chip test, any real-time signal processing.
 
 ---
 

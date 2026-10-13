@@ -40,7 +40,7 @@ Now: **Kria-to-Kria link** sub-project (two boards talking over LVDS, LED on). M
 
 ## Up next
 - Finish K4 part 2 (receiver) and K5
-- Ask Person B which Vivado version she uses
+- **Next time I meet Person B, ask:** which Vivado version she uses; what her `GPIO_0`–`GPIO_4` connect to; what feeds her DMA's `S_AXIS_S2MM`; can she export her block design (`write_bd_tcl`) or share the project
 - Board internet: it's unregistered on Duke's network (redirects to dukereg). Ask David about registering its MAC, then install Kria-PYNQ
 - Verilog basics (H&H ch 1–2 + HDLBits), then Lesson 5: the AXI-Stream handshake
 - Harris & Harris ch 1 + HDLBits (running in parallel)
