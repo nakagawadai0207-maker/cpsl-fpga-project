@@ -51,6 +51,9 @@ The overlay follows AMD's own pattern in [kria-apps-firmware](https://github.com
 11. **Generate Bitstream.** When it finishes, the file is
     `C:\fpga\dai_loopback\dai_loopback.runs\impl_1\design_1_wrapper.bin`.
     Copy it next to the other two files and rename it **`dai_loopback.bit.bin`**.
+    If there's no `.bin` (forgot `-bin_file`), don't rebuild: Open Implemented Design, then in the Tcl Console
+    `write_bitstream -force -bin_file C:/fpga/load/dai_loopback.bit` and rename `dai_loopback.bin`.
+    The `.bit.bin` is 136 bytes smaller than the `.bit` (the header). Worked first try on 2026-10-13.
 
 ## Copy to the board and load (laptop on wired Ethernet)
 

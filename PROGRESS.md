@@ -36,9 +36,10 @@ Now: **Kria-to-Kria link** sub-project (two boards talking over LVDS, LED on). M
 | 2026-10-13 | **First lab visit:** logged into the KR260 over USB serial and SSH (wired Ethernet only). Board runs stock Ubuntu 22.04, no PYNQ, but has `xmutil`/`fpgautil` to load designs. No lab PC, so installing Vivado 2025.2 ML Standard on my laptop. |
 | 2026-10-13 | **Vivado 2025.2 installed on laptop.** Ready for the lab: 6/6 |
 | 2026-10-13 | **First wiring on the KR260:** checked PMOD4 pin 11 = +3.33 V vs pin 9 with a Fluke 289, lit the LED straight from 3.3 V, then wired the loopback (pin 1 → 330 Ω → LED → pin 9, jumper pin 3 → pin 7). [Photo](photos/2026-10-13-first-wiring.jpg) |
+| 2026-10-13 | **First design running on the FPGA (K7 blink, done early):** wrote `loopback.v` by hand, built it in Vivado on my laptop (Zynq block + my module, `pins.xdc`), made `dai_loopback.bit.bin`, copied it to the board with `scp` and loaded it with `xmutil loadapp`. LED blinks through the pin 3 → pin 7 jumper. |
 
 ## Up next
-- Build blink/loopback and load with `fpgautil`
+- Pull-the-jumper test (LED should go off), then finish K4 part 2 (receiver) and K5
 - Ask Person B which Vivado version she uses
 - Verilog basics (H&H ch 1–2 + HDLBits), then Lesson 5: the AXI-Stream handshake
 - Harris & Harris ch 1 + HDLBits (running in parallel)
