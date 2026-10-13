@@ -8,7 +8,7 @@
 | A: Foundations (L0–L7, L5b, L5c) | `█████░░░░░` | 5 / 10 |
 | B: Capstones (L11–L14) | `░░░░` | 0 / 4 |
 | C: On the real board (L8–L10) | `░░░` | 0 / 3 |
-| **Ready for the lab** (K1, K2, K3, K4 counter, Vivado ready on lab PC or laptop, parts ✓ lab has them) | `█████░` | 5 / 6 |
+| **Ready for the lab** (K1, K2, K3, K4 counter, Vivado ready on lab PC or laptop, parts ✓ lab has them) | `██████` | 6 / 6 ✓ |
 | **Kria-to-Kria link (K1–K11)**, [plan](kria-link/PLAN.md) | `███░░░░░░░░` | 3 / 11, current focus |
 | **Harris & Harris ch 1–4** (needed before Lesson 5) | `░░░░` | paused; the needed sections are pulled into K3–K4 |
 
@@ -34,9 +34,10 @@ Now: **Kria-to-Kria link** sub-project (two boards talking over LVDS, LED on). M
 | 2026-10-12 | **K3 done:** flip-flops, counters (LED blink math), shift registers (serial receiver = shift register + counter) |
 | 2026-10-12 | **K4 part 1 done:** Verilog module/ports, reg, always/<=, assign. Wrote the loopback design's assign lines. Ready for the lab: 5/6 |
 | 2026-10-13 | **First lab visit:** logged into the KR260 over USB serial and SSH (wired Ethernet only). Board runs stock Ubuntu 22.04, no PYNQ, but has `xmutil`/`fpgautil` to load designs. No lab PC, so installing Vivado 2025.2 ML Standard on my laptop. |
+| 2026-10-13 | **Vivado 2025.2 installed on laptop.** Ready for the lab: 6/6 |
 
 ## Up next
-- Finish Vivado 2025.2 install on laptop (ticks Ready for the lab 6/6), then build blink/loopback and load with `fpgautil`
+- Build blink/loopback and load with `fpgautil`
 - Ask Person B which Vivado version she uses
 - Verilog basics (H&H ch 1–2 + HDLBits), then Lesson 5: the AXI-Stream handshake
 - Harris & Harris ch 1 + HDLBits (running in parallel)
