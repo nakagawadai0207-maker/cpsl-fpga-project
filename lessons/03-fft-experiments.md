@@ -1,6 +1,6 @@
 # Lesson 3: break the radar on purpose
 
-Script: [`radar/code/lesson3.py`](../code/lesson3.py). Run it from the lab's radar Python folder, since it imports that folder's `radar_config`, `radar_fft` and `synthetic_radar` modules.
+Script: [`radar/code/lesson3.py`](../radar/code/lesson3.py). Run it from the lab's radar Python folder, since it imports that folder's `radar_config`, `radar_fft` and `synthetic_radar` modules.
 
 ## Two facts
 - **Max range ≈ 3.93 m** for this configuration. Past that, the beat frequency is higher than the sampling can represent.

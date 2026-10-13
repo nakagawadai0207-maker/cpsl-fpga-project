@@ -14,7 +14,7 @@
 | Kria link lessons (K1–K11 + K7b), [plan](dca1000-removal/PLAN.md) | `████░░░░░░░░` | 4 / 12: K1, K2, K3, K7 done; K4 half done |
 | Lab setup (board login, Vivado on laptop, wiring, first bitstream) | `████` | 4 / 4 ✓ |
 
-Done: [K1 LVDS](dca1000-removal/K1-lvds.md) · [K2 serial protocols](dca1000-removal/K2-serial-protocols.md) · [K3 flip-flops, counters, shift registers](dca1000-removal/K3-flipflops-counters-shift.md) · [K4 part 1: Verilog](dca1000-removal/K4-verilog-counter.md) · K7 first design on the board ([lab guide](dca1000-removal/LAB-DAY-1-LAPTOP.md))
+Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-protocols.md) · [K3 flip-flops, counters, shift registers](lessons/K3-flipflops-counters-shift.md) · [K4 part 1: Verilog](lessons/K4-verilog-counter.md) · K7 first design on the board ([lab guide](dca1000-removal/LAB-DAY-1-LAPTOP.md))
 
 ### FPGA and hardware acceleration ([section](fpga-acceleration/))
 | Track | Progress | |

@@ -22,8 +22,8 @@
 | `assign` | continuously | wires / logic |
 
 ## Code
-- [blink.v](code/blink.v)
-- [loopback.v](code/loopback.v) (I wrote the two `assign` lines)
+- [blink.v](../dca1000-removal/code/blink.v)
+- [loopback.v](../dca1000-removal/code/loopback.v) (I wrote the two `assign` lines)
 
 ## Mistakes I made
 - Said the highest bit number of `[15:0]` is 2¹⁶ − 1. That's the highest *value*; the highest bit *number* is 15.

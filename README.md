@@ -12,6 +12,6 @@ I'm an undergraduate research assistant at Duke University's Cyber-Physical Syst
 
 The sections overlap on purpose: removing the DCA1000 needs FPGA skills, and the FPGA work exists to process radar data.
 
-[**PROGRESS.md**](PROGRESS.md) has progress bars for each section and a dated log of everything.
+**[lessons/](lessons/)** holds every lesson in one sequence, in my own words, with a "Mistakes I made" section. Lessons aren't tied to one section: each pulls from whatever topic it needs, and the section pages summarize what I've learned for that area.
 
-Each lesson gets a notes file in my own words, with a "Mistakes I made" section. Lab-internal code and documents are kept out of this repo.
+[**PROGRESS.md**](PROGRESS.md) has progress bars for each section and a dated log of everything. Lab-internal code and documents are kept out of this repo.

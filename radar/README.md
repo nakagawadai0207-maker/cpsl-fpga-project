@@ -2,13 +2,12 @@
 
 **Goal:** understand how the lab's FMCW mmWave radar turns reflections into distances, well enough to follow the lab's research and to know what the FPGA work has to process.
 
-## Notes
-- [Lesson 2: signals, the FFT, and FMCW radar](notes/02-signals-fft-fmcw.md): complex (I/Q) samples, the FFT, chirp → beat frequency, range resolution
-- [Lesson 3: break the radar on purpose](notes/03-fft-experiments.md): aliasing, resolution vs. FFT size, choosing an FFT size ([script](code/lesson3.py))
+## What I've learned
+- A chirp's echo, mixed with the outgoing chirp, gives a **beat frequency proportional to distance**; the FFT turns that into a range profile. ([Lesson 2](../lessons/02-signals-fft-fmcw.md))
+- Samples are **complex (I/Q)**; **range resolution** is set by the chirp's bandwidth. ([Lesson 2](../lessons/02-signals-fft-fmcw.md))
+- Targets past the maximum range **alias** (a 4.5 m target shows up at 0.57 m), and FFT size trades resolution against cost. ([Lesson 3](../lessons/03-fft-experiments.md), [script](code/lesson3.py))
+- The ADC's samples are 14-bit values stored in 16-bit slots. ([Lesson 4](../lessons/04-fixed-point.md))
+- The radar chip sends its raw samples out over **LVDS**: data lanes, a DDR bit clock and a frame clock. ([K1](../lessons/K1-lvds.md))
 
 ## Reading
 - TI, *Introduction to mmWave Sensing: FMCW Radars* (Sandeep Rao): slide deck, in progress
-
-## Where this connects
-- The radar's raw samples leave the chip over LVDS, which is what the [DCA1000 removal](../dca1000-removal/) work receives.
-- The FFT from Lessons 2–3 is the first computation to [hardware-accelerate](../fpga-acceleration/).
