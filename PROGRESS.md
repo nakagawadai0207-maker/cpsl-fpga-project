@@ -33,8 +33,10 @@ Now: **Kria-to-Kria link** sub-project (two boards talking over LVDS, LED on). M
 | 2026-10-12 | **K2 done:** serial protocols (timing vs framing; UART, SPI, I²C, source-synchronous LVDS) |
 | 2026-10-12 | **K3 done:** flip-flops, counters (LED blink math), shift registers (serial receiver = shift register + counter) |
 | 2026-10-12 | **K4 part 1 done:** Verilog module/ports, reg, always/<=, assign. Wrote the loopback design's assign lines. Ready for the lab: 5/6 |
+| 2026-10-13 | **First lab visit:** logged into the KR260 over USB serial and SSH (wired Ethernet only). Board runs stock Ubuntu 22.04, no PYNQ, but has `xmutil`/`fpgautil` to load designs. No lab PC, so installing Vivado 2025.2 ML Standard on my laptop. |
 
 ## Up next
-- First lab visit (2026-10-13): open Vivado on the lab PC, blink, loopback wire
+- Finish Vivado 2025.2 install on laptop (ticks Ready for the lab 6/6), then build blink/loopback and load with `fpgautil`
+- Ask Person B which Vivado version she uses
 - Verilog basics (H&H ch 1–2 + HDLBits), then Lesson 5: the AXI-Stream handshake
 - Harris & Harris ch 1 + HDLBits (running in parallel)
