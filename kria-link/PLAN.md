@@ -4,7 +4,7 @@
 
 **Why it matters:** this is the first step toward plugging the TI radar straight into a Kria. Today the chain is radar → DCA1000 capture board → Ethernet → PC. The goal is radar → Kria.
 
-**Dai's two goals (restated 2026-10-13):** (1) eliminate the DCA1000, and (2) learn how to **hardware-accelerate** a computation, in a way that carries over to future projects. Every lesson below serves one or both.
+**Goals (Dai, 2026-10-13):** the **main goal** is to contribute to the lab by **eliminating the DCA1000**. Along the way, for future projects: learn **how an FPGA fits into a system** (pins → logic → AXI → memory → software) and **how to hardware-accelerate** a computation. Every lesson below serves at least one.
 
 ---
 
@@ -31,7 +31,7 @@ Each lesson below covers one piece of this picture.
    - **b. Rebuild samples** from the bits (frame clock, bit alignment): K5, K9
    - **c. Get the samples into memory** where software and Person A's processing can use them: K10
    - **d. Configure and start the radar.** TI's demo firmware takes its settings as text commands over UART, the same settings as `radar_config.py`. K2 introduces UART; K11 uses it.
-2. **Learn hardware acceleration, transferable to future projects.** Accelerating means moving a heavy computation (an FFT, backprojection) off the processor and into custom PL logic. It always uses the same loop: **memory → DMA → your compute block → DMA → memory**, with software starting it and reading the result. That loop is built from the system shape below, so goal 2 needs K4–K5 (writing logic), K10 (AXI, DMA) and K12 (the loop itself). Almost every FPGA product has the same shape: **pins → custom logic (PL) → a standard bus (AXI) → memory → a processor running software (PS)**. K1–K9 cover the pins and logic. K10–K11 cover the bus, memory and software. The same shape shows up in quantum control hardware (FPGA logic driving DACs, a CPU running the experiment) and in chip test setups.
+2. **For my future: how FPGAs fit into systems, and hardware acceleration.** Accelerating means moving a heavy computation (an FFT, backprojection) off the processor and into custom PL logic. It always uses the same loop: **memory → DMA → your compute block → DMA → memory**, with software starting it and reading the result. That loop is built from the system shape below, so goal 2 needs K4–K5 (writing logic), K10 (AXI, DMA) and K12 (the loop itself). Almost every FPGA product has the same shape: **pins → custom logic (PL) → a standard bus (AXI) → memory → a processor running software (PS)**. K1–K9 cover the pins and logic. K10–K11 cover the bus, memory and software. The same shape shows up in quantum control hardware (FPGA logic driving DACs, a CPU running the experiment) and in chip test setups.
 
 | Lesson | DCA1000 job | General FPGA skill |
 |---|---|---|
