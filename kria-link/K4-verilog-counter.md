@@ -27,3 +27,6 @@
 
 ## Mistakes I made
 - Said the highest bit number of `[15:0]` is 2¹⁶ − 1. That's the highest *value*; the highest bit *number* is 15.
+- (2026-10-13, writing loopback.v myself) Declared the counter as `[25:0]` when I needed bit 26. The left number is the highest bit *used*, so `[26:0]` = 27 flip-flops.
+- Typed `podedge` and kept the example's signal name `tick` instead of my port `clk`.
+- Wrote `in_pin[0]`: you can't index a 1-bit wire; just `in_pin`. Forgot `endmodule`.
