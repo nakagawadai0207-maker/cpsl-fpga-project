@@ -5,7 +5,7 @@
 **First step:** get two Kria boards talking over a serial link (single-ended on the KR260's 3.3 V PMOD pins first, true LVDS later), shown by one board lighting an LED on the other. I'm helping a labmate with this.
 
 ## What I've learned for this
-- **LVDS:** the receiver reads the difference between two wires, which cancels noise; it needs 100 Ω termination. 3.3 V PMOD pins (HD banks) can't transmit LVDS. ([K1](../lessons/K1-lvds.md))
+- **LVDS:** the receiver reads the difference between two wires, which cancels noise; it needs 100 Ω termination, which the KR260's PMOD pins (HD banks) need as a physical resistor. ([K1](../lessons/K1-lvds.md)) Those 3.3 V pins also can't transmit LVDS at all. ([plan](PLAN.md#one-hardware-fact-that-decides-a-lot))
 - **Every serial link** has to solve when to read each bit and where a word starts; the radar sends a clock and a frame signal for that. ([K2](../lessons/K2-serial-protocols.md))
 - **A serial receiver** is a shift register plus a counter. ([K3](../lessons/K3-flipflops-counters-shift.md), [K4](../lessons/K4-verilog-counter.md))
 - **Samples into memory** go through AXI and DMA between the FPGA (PL) and processor (PS). ([Lesson 1](../lessons/01-fpga-mental-model.md))
