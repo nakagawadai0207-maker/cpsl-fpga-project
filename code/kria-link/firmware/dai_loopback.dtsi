@@ -1,0 +1,24 @@
+// Device tree overlay for the dai_loopback design (KR260, Kria Ubuntu 22.04).
+// Pattern copied from AMD's kria-apps-firmware overlays (kr260-bist.dtsi,
+// k26-dfx opendfx_shell_wrapper.dtsi).
+/dts-v1/;
+/plugin/;
+
+&fpga_full {
+	#address-cells = <2>;
+	#size-cells = <2>;
+	firmware-name = "dai_loopback.bit.bin";   // the bitstream to load
+	resets = <&zynqmp_reset 116>;
+};
+
+&amba {
+	// Turns on pl_clk0 (PS clock 71) at 100 MHz; loopback.v counts on it.
+	clocking0: clocking0 {
+		#clock-cells = <0>;
+		assigned-clock-rates = <99999001>;
+		assigned-clocks = <&zynqmp_clk 71>;
+		clock-output-names = "fabric_clk";
+		clocks = <&zynqmp_clk 71>;
+		compatible = "xlnx,fclk";
+	};
+};

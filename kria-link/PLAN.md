@@ -122,6 +122,7 @@ Each lesson is taught in chat in small chunks with a check after each one, then 
 
 ### K7. Your first bitstream on one Kria
 - **Step-by-step for the first visit:** [LAB-DAY-1.md](LAB-DAY-1.md) 🔧
+- **No lab PC / no PYNQ version (what we actually used):** [LAB-DAY-1-LAPTOP.md](LAB-DAY-1-LAPTOP.md)
 - The Vivado flow: project → RTL or block design → constraints → synthesize → implement → bitstream → load it on the board
 - **Do:** blink an LED on one Kria. This proves your tool flow before two boards are involved.
 - **Then wire something:** one jumper wire from one PMOD pin to another on the same board. The FPGA drives the first pin and reads the second back onto an LED. Pull the wire and the LED stops following. This is the first real wiring.
