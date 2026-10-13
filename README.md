@@ -1,29 +1,17 @@
-# cpsl-fpga-project
+# My work at CPSL
 
-I am an undergraduate research assistant at Duke University's Cyber-Physical Systems Lab (CPSL). This is my journey through learning FPGA basics and how they apply to radar.
+I'm an undergraduate research assistant at Duke University's Cyber-Physical Systems Lab (CPSL), working on FMCW mmWave radar. This repo documents what I work on there and what I learn along the way, starting from zero.
 
-**The goal:** learn how an FPGA (AMD Kria KR260 / K26) can speed up FMCW mmWave radar processing. I'm starting from zero, and I want skills that also carry over to chip design and quantum-control hardware.
+## Three sections
 
-Right now:
-1. **Main goal: replace the DCA1000 capture board** so the radar's LVDS data goes straight into the Kria (the [kria-link](kria-link/PLAN.md) sub-project). This is my contribution to the lab.
-2. **For my future:** learn how an FPGA fits into a whole system (pins → logic → AXI bus → memory → software), and how to **hardware-accelerate** a computation (memory → DMA → my logic → DMA → memory, measured against Python).
+| Section | What it is | Status |
+|---|---|---|
+| [**Radar**](radar/) | Learning how FMCW mmWave radar works: chirps, beat frequency, the FFT, range resolution | Lessons 2–3 done |
+| [**DCA1000 removal**](dca1000-removal/) | **My main contribution to the lab.** Replace the DCA1000 capture board so the radar's LVDS data goes straight into an AMD Kria FPGA board | Current focus: first design running on the board |
+| [**FPGA and hardware acceleration**](fpga-acceleration/) | For my future: how an FPGA fits into a whole system (pins → logic → AXI bus → memory → software), and how to move a heavy computation into hardware | Lessons 1 and 4 done |
 
-## Layout
+The sections overlap on purpose: removing the DCA1000 needs FPGA skills, and the FPGA work exists to process radar data.
 
-| Path | What's in it |
-|---|---|
-| [PROGRESS.md](PROGRESS.md) | Progress bars + dated log |
-| [notes/](notes/) | One file per lesson: what I learned, in my own words, plus check questions I got wrong and why |
-| [kria-link/](kria-link/) | Sub-project: two Krias talking over LVDS ([plan](kria-link/PLAN.md)) |
-| [code/](code/) | Scripts I wrote or ran for the lessons |
+[**PROGRESS.md**](PROGRESS.md) has progress bars for each section and a dated log of everything.
 
-## The path
-
-1. **Big picture.** What an FPGA is, the PS/PL split on a Zynq, and how data moves (AXI, DMA).
-2. **Signals and radar.** Complex numbers, the FFT, and FMCW chirps (beat frequency ∝ distance).
-3. **Numbers in hardware.** Fixed point.
-4. **Digital logic + HDL.** Harris & Harris, *Digital Design and Computer Architecture*, plus HDLBits.
-5. **HLS** (hardware from C++), then the whole system on the board.
-6. **Capstones**, e.g. an FFT/backprojection kernel, sizing, a bit-width study, and an LVDS deserializer sim.
-
-Lab-internal code and documents are kept out of this repo.
+Each lesson gets a notes file in my own words, with a "Mistakes I made" section. Lab-internal code and documents are kept out of this repo.

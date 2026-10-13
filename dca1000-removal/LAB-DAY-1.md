@@ -5,7 +5,7 @@
 2. Load **your own Verilog** onto the Kria and see an LED blink.
 3. Add one jumper wire and watch the LED follow it.
 
-**Your design:** [`code/kria-link/loopback.v`](../code/kria-link/loopback.v). It already contains the blink (bit 26 of the counter goes out on `out_pin`).
+**Your design:** [`code/loopback.v`](code/loopback.v). It already contains the blink (bit 26 of the counter goes out on `out_pin`).
 
 Where these steps come from: the lab's own docs in `CPSL_Manuals/Kria Board` (QUICKSTART, the template project, `projects/pmod-serial-loopback`). Those docs were AI-written, so the multimeter check in step 7 is not optional.
 

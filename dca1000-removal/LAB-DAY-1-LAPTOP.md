@@ -15,8 +15,8 @@ Pin map confirmed with a multimeter (pin 11 = +3.33 V vs pin 9) and against a
 | File | What it is | Where it comes from |
 |---|---|---|
 | `dai_loopback.bit.bin` | the bitstream | Vivado (step 9 below) |
-| `dai_loopback.dtbo` | device tree overlay: names the bitstream and turns on `pl_clk0` (100 MHz) | [`code/kria-link/firmware/`](../code/kria-link/firmware/) (already built) |
-| `shell.json` | tells `xmutil` it's a plain full-PL design | [`code/kria-link/firmware/`](../code/kria-link/firmware/) |
+| `dai_loopback.dtbo` | device tree overlay: names the bitstream and turns on `pl_clk0` (100 MHz) | [`code/firmware/`](code/firmware/) (already built) |
+| `shell.json` | tells `xmutil` it's a plain full-PL design | [`code/firmware/`](code/firmware/) |
 
 The overlay follows AMD's own pattern in [kria-apps-firmware](https://github.com/Xilinx/kria-apps-firmware)
 (`boards/kr260/bist/kr260-bist.dtsi`, `k26-dfx/2rp/opendfx_shell_wrapper.dtsi`).
