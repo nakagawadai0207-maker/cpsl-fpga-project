@@ -4,6 +4,10 @@ I am an undergraduate research assistant at Duke University's Cyber-Physical Sys
 
 **The goal:** learn how an FPGA (AMD Kria KR260 / K26) can speed up FMCW mmWave radar processing. I'm starting from zero, and I want skills that also carry over to chip design and quantum-control hardware.
 
+Right now that goal has two concrete parts:
+1. **Replace the DCA1000 capture board** so the radar's LVDS data goes straight into the Kria (the [kria-link](kria-link/PLAN.md) sub-project).
+2. **Hardware-accelerate** a radar computation (memory → DMA → my logic → DMA → memory), measured against Python, in a way I can reuse on future projects.
+
 ## Layout
 
 | Path | What's in it |
