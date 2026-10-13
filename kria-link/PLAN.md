@@ -42,6 +42,7 @@ Each lesson below covers one piece of this picture.
 | K7 first bitstream | all | the tool flow |
 | K8 two boards + ILA | a | bring-up and debugging |
 | K9 IDDR/ISERDES | a, b | fast interfaces, clock domains |
+| K7b AXI GPIO | c (first step) | software controlling hardware |
 | K10 AXI + DMA | c | how logic talks to the processor |
 | K11 whole system | c, d | Linux/PYNQ talking to your hardware |
 
@@ -64,6 +65,24 @@ The FPGA's pins are grouped into **banks**, and the bank type decides what a pin
 > 2. Move to true LVDS on the CPSL carrier, which has HP banks wired for it.
 >
 > **Ask Person B:** "The KR260's PMOD and Pi headers are 3.3 V HD banks, which can't transmit LVDS. Did you mean two KR260s over single-ended pins first, or the CPSL carrier with the Samtec LVDS connectors?"
+
+---
+
+## Person B's block design (screenshot, 2026-10-13)
+
+Person B shared her Vivado block design. It's the PS ↔ PL side of the system above, already built, so K7b, K10 and K11 now use it as the reference instead of starting from a blank design. What's in it (read from the screenshot; what each GPIO is *for* is unknown, so ask her):
+
+| Block | What it does | Lesson |
+|---|---|---|
+| Zynq, `M_AXI_HPM0_LPD` port | the processor's way to send commands into the PL | K7b |
+| `axi_smc` (AXI SmartConnect, 7 outputs) | splits that one port so the processor can reach 7 blocks | K7b |
+| `axi_gpio_0` to `axi_gpio_4` → `GPIO_0` to `GPIO_4` | pins the processor sets or reads from software | K7b |
+| `axi_dma_0` (`S_AXIS_S2MM` in) → `smartconnect_0` → Zynq `S_AXI_HPC0_FPD` | copies a stream from the PL into the processor's memory | K10 |
+| `axi_intc_0` → Zynq `pl_ps_irq0` | lets the PL tell the processor "data is ready" | K10, K11 |
+| `clk_wiz_0`, `proc_sys_reset_0/1` | clocks and resets for the blocks above | K10 |
+| `xslice_0`: Zynq `emio_ttc0_wave_o` → `fan_en_b` | drives the board fan from a PS timer | K7 (fix) |
+
+**Ask Person B:** what are `GPIO_0`–`GPIO_4` connected to, where does `S_AXIS_S2MM` get its data, and can she export the design (`write_bd_tcl`) or share the project so it can be opened instead of copied by eye?
 
 ---
 
@@ -128,6 +147,14 @@ Each lesson is taught in chat in small chunks with a check after each one, then 
 - **Then wire something:** one jumper wire from one PMOD pin to another on the same board. The FPGA drives the first pin and reads the second back onto an LED. Pull the wire and the LED stops following. This is the first real wiring.
 - **Order (changed 2026-10-12, Dai wants lab time early):** do K7 right after K3 plus the counter part of K4, before K5. The blink is just a counter driving an LED.
 - Reuses the lab's existing tutorials (`CPSL_Manuals/Kria Board`), = Part C lessons L8–L9 of the main plan.
+- **Done 2026-10-13** (laptop + `xmutil` version): hand-written `loopback.v`, blink and jumper test both passed.
+- **Fan fix for later designs:** our design leaves `fan_en_b` undriven. Person B's design drives it from the PS timer (`emio_ttc0_wave_o` → slice → `fan_en_b`), like AMD's KR260 designs. Copy that block and its pin constraint from her design next time.
+
+### K7b. The processor flips your LED: AXI GPIO 🔧 (added 2026-10-13, needs PYNQ)
+- The smallest possible PS → PL connection, taken from Person B's design: keep the Zynq's `M_AXI_HPM0_LPD` port, add one **AXI GPIO** through a SmartConnect, and wire its output to the PMOD LED pin.
+- On the board, Python (PYNQ) writes 1 or 0 to the GPIO and the LED follows. That's the first time software controls your hardware.
+- New ideas: an **address** (each AXI block gets one, shown in the Address Editor tab), a **register** (a value at that address), and why Run Block Automation adds the SmartConnect and reset block for you.
+- Why now: it's the first piece of K10 and K11, and it's half of Person B's design. Blocked until the board is registered on Duke's network and PYNQ is installed.
 
 ### K8. Two boards, one link 🔧
 - Load the K5 transmitter onto Kria A and the receiver onto Kria B. Wire P→P and N→N, and **share a ground**.
@@ -146,6 +173,8 @@ Each lesson is taught in chat in small chunks with a check after each one, then 
 - **AXI-Stream:** a data wire plus two handshake wires, `valid` (sender has data) and `ready` (receiver can take it). A word moves only when both are 1. This is main-plan Lesson 5.
 - **DMA:** a block that copies an AXI-Stream into DDR memory without the CPU touching each word.
 - **Do:** in simulation, wrap your K9 receiver output as AXI-Stream. On the board, send a counter pattern through AXI DMA into memory and read it in Python (PYNQ), checking that no number is missing.
+- **Start from Person B's design:** its `axi_dma_0` → `smartconnect_0` → `S_AXI_HPC0_FPD` path is exactly this. Your counter (later the K9 receiver) drives `S_AXIS_S2MM`. Learn each of her blocks first, then plug yours in, instead of rebuilding the DMA side yourself.
+- **Interrupts:** her `axi_intc_0` lets the DMA signal "transfer done" to Linux instead of software checking in a loop.
 
 ### K11. The whole system: radar to software, no DCA1000 🔧
 - Configure the radar from the Kria over UART (the same settings as `radar_config.py`), start it, receive the LVDS (K9), move the samples into memory (K10), and read one frame in Python.
