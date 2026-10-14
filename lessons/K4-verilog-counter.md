@@ -1,4 +1,4 @@
-# K4 (part 1). Just enough Verilog for the first lab
+# K4. Just enough Verilog for a serial link
 
 **Where it sits:** this is the code that goes onto the board on the first lab visit. The rest of K4 (more Verilog, HDLBits) comes before K5.
 
@@ -21,6 +21,35 @@
 | `always @(posedge clk)` with `<=` | only at rising edges | flip-flops |
 | `assign` | continuously | wires / logic |
 
+## Part 2: transmitter and receiver (done 2026-10-14)
+- **Literals:** `8'b10110010` = 8 bits, binary. `3'd7` = 3 bits, decimal 7. `1'b0` = one 0 bit.
+- **Concatenation `{ }`** glues bits left to right: `{2'b10, 3'b111}` = `10111`.
+- **`==`** gives 1 if equal. **`if/else`** inside `always` becomes a **multiplexer** choosing what a register loads.
+
+**Transmitter** (sends lowest bit first, `frame` marks bit 0 of each byte):
+```verilog
+always @(posedge clk) begin
+    if (bitcnt == 3'd7) tx <= 8'b10110010;     // reload after the last bit
+    else                tx <= {1'b0, tx[7:1]};  // shift right
+    bitcnt <= bitcnt + 1;                       // 3 bits: 7 wraps to 0
+end
+assign dout  = tx[0];
+assign frame = (bitcnt == 3'd0);
+```
+`10110010` goes out as 0, 1, 0, 0, 1, 1, 0, 1.
+
+**Receiver** (new bit enters at the top, so after 8 edges bit 0 has reached `rx[0]`):
+```verilog
+always @(posedge clk) begin
+    if (frame) word <= rx;      // rx holds the whole previous byte right now
+    rx <= {din, rx[7:1]};
+end
+```
+- Bits 0, 1, 0 from `00000000`: `00000000`, `10000000`, `01000000`. After all 8: `10110010`.
+- On the frame edge both lines update **at the same edge** from the old values: `word` = `10110010`, `rx` = `01011001`. The order of the lines doesn't matter.
+- The lab's own 1 MHz PMOD loopback receiver uses exactly this line, 32 bits wide: `rx_shift <= {rx_pin, rx_shift[31:1]}`.
+- Same job the radar's frame clock does for the DCA1000: mark where each sample starts.
+
 ## Code
 - [blink.v](../dca1000-removal/code/blink.v)
 - [loopback.v](../dca1000-removal/code/loopback.v) (I wrote the two `assign` lines)
@@ -30,3 +59,4 @@
 - (2026-10-13, writing loopback.v myself) Declared the counter as `[25:0]` when I needed bit 26. The left number is the highest bit *used*, so `[26:0]` = 27 flip-flops.
 - Typed `podedge` and kept the example's signal name `tick` instead of my port `clk`.
 - Wrote `in_pin[0]`: you can't index a 1-bit wire; just `in_pin`. Forgot `endmodule`.
+- (2026-10-14) Described the frame edge as `word` copies, then `rx` shifts "afterwards". They happen at the same edge; `<=` reads all old values first.

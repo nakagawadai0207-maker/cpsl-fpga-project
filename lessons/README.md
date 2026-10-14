@@ -11,6 +11,6 @@ All my lessons, in the order I did them. They aren't owned by one section: each 
 | K1 | [LVDS](K1-lvds.md): differential signalling, termination, the radar's lanes, DDR clock | DCA1000 · Radar · FPGA |
 | K2 | [Serial protocols](K2-serial-protocols.md): UART, SPI, I²C, source-synchronous LVDS | DCA1000 · FPGA |
 | K3 | [Flip-flops, counters, shift registers](K3-flipflops-counters-shift.md) | FPGA · DCA1000 |
-| K4 | [Verilog](K4-verilog-counter.md): modules, `reg`, `always`, `assign`; my mistakes writing `loopback.v` | FPGA · DCA1000 |
+| K4 | [Verilog](K4-verilog-counter.md): modules, `reg`, `always`, `assign`, `if`/`else`; a serial transmitter and receiver; my mistakes writing `loopback.v` | FPGA · DCA1000 |
 
 Hands-on work (lab guides, code, photos) lives in the section where it was done, e.g. [lab day 1](../dca1000-removal/LAB-DAY-1-LAPTOP.md). The full lesson plan is [here](../dca1000-removal/PLAN.md).
