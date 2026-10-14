@@ -11,6 +11,7 @@
 - **Samples into memory** go through AXI and DMA between the FPGA (PL) and processor (PS). ([Lesson 1](../lessons/01-fpga-mental-model.md))
 - **Sample format:** how two 16-bit I/Q values pack into one 32-bit word. ([Lesson 4](../lessons/04-fixed-point.md))
 - **On the real board:** the full Vivado flow, loading with `xmutil`, and a loopback test through two PMOD pins. ([lab day 1](LAB-DAY-1-LAPTOP.md))
+- **PYNQ on the board** (2026-10-14): Python on the board's ARM cores can load designs and move data to and from the FPGA, which is how radar samples will reach software. Long installs go inside `tmux` so a dropped SSH connection doesn't kill them.
 
 ## Plan and lab work
 - [**PLAN.md**](PLAN.md): the full lesson plan, K1–K12, and why each step matters
