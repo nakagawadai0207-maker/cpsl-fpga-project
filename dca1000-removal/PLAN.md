@@ -128,6 +128,8 @@ Each lesson is taught in chat in small chunks with a check after each one, then 
 - Connect them in one testbench on **EDA Playground** and check that the receiver's word matches what was sent.
 - Then break it on purpose: shift the clock by half a bit, drop a frame pulse. See what goes wrong, because that's what you'll debug on real hardware.
 - **This is the core lesson.** Everything after it is getting this onto real pins.
+- **Then the realistic version (added 2026-10-14):** a real link doesn't send one bit per clock. Add a **bit-time counter** (each bit lasts N clock cycles, e.g. 200 cycles of 200 MHz = 1 MHz) and **sample in the middle of each bit**, where the signal is most stable. Organise it as a small state machine: wait for a word, shift it out, hand the received word on.
+- **Finish line:** the lab already has a working one-board version of this (1 MHz, PMOD4 pin 3 → jumper → pin 7, the same wiring as lab day 1). After K5, read it line by line; its receive line is exactly the K4 one.
 
 ### K6. Differential pins in Vivado 🔧
 - `OBUFDS` (one signal in, a P/N pair out) and `IBUFDS` (a P/N pair in, one signal out) are the primitives that drive and read a pair. Vivado's **Utility Buffer** IP is a block-diagram wrapper around these, which is what Person B mentioned.
@@ -158,6 +160,7 @@ Each lesson is taught in chat in small chunks with a check after each one, then 
 - On the board, Python (PYNQ) writes 1 or 0 to the GPIO and the LED follows. That's the first time software controls your hardware.
 - New ideas: an **address** (each AXI block gets one, shown in the Address Editor tab), a **register** (a value at that address), and why Run Block Automation adds the SmartConnect and reset block for you.
 - Why now: it's the first piece of K10 and K11, and it's half of Person B's design. Blocked until the board is registered on Duke's network and PYNQ is installed.
+- **Unblocked 2026-10-14:** the board has internet and PYNQ. The lab's template designs already put AXI GPIOs on PMODs 1–3, and there is a prebuilt LED GPIO example to try first, before building one.
 
 ### K8. Two boards, one link 🔧
 - Load the K5 transmitter onto Kria A and the receiver onto Kria B. Wire P→P and N→N, and **share a ground**.
@@ -178,6 +181,8 @@ Each lesson is taught in chat in small chunks with a check after each one, then 
 - **Do:** in simulation, wrap your K9 receiver output as AXI-Stream. On the board, send a counter pattern through AXI DMA into memory and read it in Python (PYNQ), checking that no number is missing.
 - **Start from Person B's design:** its `axi_dma_0` → `smartconnect_0` → `S_AXI_HPC0_FPD` path is exactly this. Your counter (later the K9 receiver) drives `S_AXIS_S2MM`. Learn each of her blocks first, then plug yours in, instead of rebuilding the DMA side yourself.
 - **Interrupts:** her `axi_intc_0` lets the DMA signal "transfer done" to Linux instead of software checking in a loop.
+- **TLAST (added 2026-10-14):** a third stream wire that marks the last word of a packet. The DMA's receive side stops at the first TLAST it sees, so where TLAST goes decides how much data one transfer carries. The lab's FFT path uses two small modules for this: one inserts TLAST every 256 samples (one FFT frame), the other lets only every Nth one through so one transfer holds a whole radar frame.
+- **The four PYNQ DMA rules:** allocate buffers with `pynq.allocate`, `flush()` before sending, start the receive before the send, `invalidate()` after receiving.
 
 ### K11. The whole system: radar to software, no DCA1000 🔧
 - Configure the radar from the Kria over UART (the same settings as `radar_config.py`), start it, receive the LVDS (K9), move the samples into memory (K10), and read one frame in Python.
@@ -188,6 +193,7 @@ Each lesson is taught in chat in small chunks with a check after each one, then 
 - **The loop:** Python puts data in memory → DMA reads it out as a stream (`M_AXIS_MM2S`) → your compute block → DMA writes the result back (`S_AXIS_S2MM`) → Python reads it. Person B's `axi_dma_0` already has both directions, so K12 adds the compute block in the middle.
 - **First compute block: an FFT.** It ties to what you know: Lesson 3 (FFT size, aliasing) and Lesson 4 (fixed point, ÷16 scaling). Use AMD's FFT IP first, then compare against the lab's `fpga_fft.py` model (256-point, radix-4).
 - **Measure:** time it against NumPy on the Kria's ARM cores, and count FPGA resources (DSPs, BRAM) in Vivado's utilization report. Accelerating is only worth it if the numbers say so, and learning to check that is the transferable part.
+- **What the lab already has (2026-10-14):** a script that adds a 256-point FFT (AMD's FFT IP, pipelined streaming, 16-bit fixed point, ÷16 scaling) between the DMA's two streams. So K12 starts by rebuilding that, not designing from zero. Person A's "faster" is measured against PYNQ Python on the ARM cores; also time NumPy on a laptop so the comparison is fair. Open question for Person A: where range and CFAR run (not found in the FPGA files).
 - **Then the real target:** main-plan capstones L11–L13: backprojection (the radar imaging step worth accelerating), sizing (does it fit on the chip?) and bit widths. They're paused; K12 is where they rejoin.
 - Same loop, different block, in other fields: quantum control (FPGA logic shaping pulses for DACs), chip test, any real-time signal processing.
 
