@@ -2,7 +2,9 @@
 
 **Goal:** get two Kria boards talking over differential (LVDS) wires, and prove it by having one board turn on an LED on the other.
 
-**Why it matters:** this is the first step toward plugging the TI radar straight into a Kria. Today the chain is radar → DCA1000 capture board → Ethernet → PC. The goal is radar → Kria.
+**Why it matters:** this is the first step toward plugging the TI radar straight into a Kria. Today the chain is radar → DCA1000 capture board → Ethernet → Kria (or a PC). The goal is radar → Kria directly.
+
+**Update 2026-10-14 (from Person A's write-up):** the lab's range and Doppler processing already runs in the Kria's FPGA fabric. With the math accelerated, the slow part is now *getting the radar data in*: the DCA1000, the Ethernet hop and the software that receives the packets. The lab's stated next hardware step is a board that brings the radar's LVDS straight into the FPGA. That is exactly this sub-project, so goal 1 is the lab's priority, not a side task.
 
 **Goals (Dai, 2026-10-13):** the **main goal** is to contribute to the lab by **eliminating the DCA1000**. Along the way, for future projects: learn **how an FPGA fits into a system** (pins → logic → AXI → memory → software) and **how to hardware-accelerate** a computation. Every lesson below serves at least one.
 
@@ -16,7 +18,7 @@ Each lesson below covers one piece of this picture.
 1. The TI radar chip (IWR6843) samples the beat signal with its ADC.
 2. It sends those samples out over **LVDS**: 2 data lanes, a bit clock, and a frame clock, all as differential pairs. TI's datasheet describes this LVDS port as a debug interface.
 3. The **DCA1000** board receives the LVDS. It has its own FPGA (a Lattice ECP5) that turns the lanes back into samples.
-4. The DCA1000 streams them to a PC over 1 Gb Ethernet.
+4. The DCA1000 streams them over 1 Gb Ethernet to a PC or to the Kria, where software reassembles the packets into frames before any processing starts.
 
 **Goal:** steps 3 and 4 are replaced by a Kria. The Kria's FPGA receives the LVDS itself, so the data never leaves the board you're processing it on.
 
@@ -29,7 +31,7 @@ Each lesson below covers one piece of this picture.
 1. **Remove the DCA1000.** To replace it, the Kria has to do every job the DCA1000 does today, plus hand the data on:
    - **a. Receive** the radar's LVDS lanes: K1, K2, K5, K6, K8, K9
    - **b. Rebuild samples** from the bits (frame clock, bit alignment): K5, K9
-   - **c. Get the samples into memory** where software and Person A's processing can use them: K10
+   - **c. Hand the samples to the processing** in the layout it already expects (one frame = 4 receivers × 63 samples × 210 chirps, 16-bit I and Q), either into memory for software or straight into the FPGA processing chain: K10, K11
    - **d. Configure and start the radar.** TI's demo firmware takes its settings as text commands over UART, the same settings as `radar_config.py`. K2 introduces UART; K11 uses it.
 2. **For my future: how FPGAs fit into systems, and hardware acceleration.** Accelerating means moving a heavy computation (an FFT, backprojection) off the processor and into custom PL logic. It always uses the same loop: **memory → DMA → your compute block → DMA → memory**, with software starting it and reading the result. That loop is built from the system shape below, so goal 2 needs K4–K5 (writing logic), K10 (AXI, DMA) and K12 (the loop itself). Almost every FPGA product has the same shape: **pins → custom logic (PL) → a standard bus (AXI) → memory → a processor running software (PS)**. K1–K9 cover the pins and logic. K10–K11 cover the bus, memory and software. The same shape shows up in quantum control hardware (FPGA logic driving DACs, a CPU running the experiment) and in chip test setups.
 
@@ -47,7 +49,7 @@ Each lesson below covers one piece of this picture.
 | K7b AXI GPIO | c (first step) | software controlling hardware |
 | K10 AXI + DMA | c | how logic talks to the processor |
 | K11 whole system | c, d | Linux/PYNQ talking to your hardware |
-| K12 first accelerator | (Person A's side) | the acceleration loop: memory → DMA → compute → DMA → memory, timed against Python |
+| K12 the lab's accelerator | (Person A's side) | the acceleration loop, HLS, overflow handling, verifying and timing an accelerator |
 
 ---
 
@@ -185,16 +187,21 @@ Each lesson is taught in chat in small chunks with a check after each one, then 
 - **The four PYNQ DMA rules:** allocate buffers with `pynq.allocate`, `flush()` before sending, start the receive before the send, `invalidate()` after receiving.
 
 ### K11. The whole system: radar to software, no DCA1000 🔧
+- **Target (2026-10-14):** feed the lab's existing FPGA range–Doppler processing directly, so a frame never leaves the chip as Ethernet packets. Check with Person A what input format their pipeline's first block takes.
 - Configure the radar from the Kria over UART (the same settings as `radar_config.py`), start it, receive the LVDS (K9), move the samples into memory (K10), and read one frame in Python.
 - Check the result against what you already know from Lesson 3: a target at 1.0 m should show a peak at 1.0 m.
 - That frame is what Person A's processing consumes, which closes the loop from radar to result with no DCA1000.
 
-### K12. Your first hardware accelerator 🔧 (added 2026-10-13, goal 2)
-- **The loop:** Python puts data in memory → DMA reads it out as a stream (`M_AXIS_MM2S`) → your compute block → DMA writes the result back (`S_AXIS_S2MM`) → Python reads it. Person B's `axi_dma_0` already has both directions, so K12 adds the compute block in the middle.
-- **First compute block: an FFT.** It ties to what you know: Lesson 3 (FFT size, aliasing) and Lesson 4 (fixed point, ÷16 scaling). Use AMD's FFT IP first, then compare against the lab's `fpga_fft.py` model (256-point, radix-4).
-- **Measure:** time it against NumPy on the Kria's ARM cores, and count FPGA resources (DSPs, BRAM) in Vivado's utilization report. Accelerating is only worth it if the numbers say so, and learning to check that is the transferable part.
-- **What the lab already has (2026-10-14):** a script that adds a 256-point FFT (AMD's FFT IP, pipelined streaming, 16-bit fixed point, ÷16 scaling) between the DMA's two streams. So K12 starts by rebuilding that, not designing from zero. Person A's "faster" is measured against PYNQ Python on the ARM cores; also time NumPy on a laptop so the comparison is fair. Open question for Person A: where range and CFAR run (not found in the FPGA files).
-- **Then the real target:** main-plan capstones L11–L13: backprojection (the radar imaging step worth accelerating), sizing (does it fit on the chip?) and bit widths. They're paused; K12 is where they rejoin.
+### K12. Hardware acceleration, using the lab's real accelerator 🔧 (rewritten 2026-10-14, goal 2)
+- **The loop:** Python puts data in memory → DMA streams it out → compute blocks → DMA writes results back → Python reads them. Same as before, but now there is a real, working example in the lab to learn from instead of a toy.
+- **Study the lab's accelerator piece by piece:** range FFTs (one per receiver per chirp) → **corner turn** (re-ordering the data in on-chip memory so each Doppler FFT gets one range bin across all chirps) → Doppler FFTs → magnitude². Connects directly to Lessons 2–4 (FFT, fixed point, ÷16 scaling).
+- **New skills it uses:**
+  - **Vitis HLS:** writing FPGA blocks in C++ that the tool turns into hardware. The glue blocks are written this way, the FFTs are AMD's IP.
+  - **Overflow handling:** the FFT core *wraps* on overflow (a frame becomes garbage, not just clipped), so the design uses fixed scaling plus a hardware overflow counter that software can read.
+  - **Verification:** compare every output against a float64 NumPy reference (correlation, worst-cell error), not just "the picture looks right".
+  - **Measuring honestly:** time every stage per frame, check that 1 / (total time per frame) predicts the frame rate you actually get, and find where the time really goes. In the lab's case the answer pointed back to the capture path, i.e. goal 1.
+- **Then, if useful to the lab:** the open problems the lab itself lists, e.g. CFAR detection in the fabric. Ask Person A before picking one.
+- **Later:** main-plan capstones L11–L13 (backprojection, sizing, bit widths) rejoin here.
 - Same loop, different block, in other fields: quantum control (FPGA logic shaping pulses for DACs), chip test, any real-time signal processing.
 
 ---

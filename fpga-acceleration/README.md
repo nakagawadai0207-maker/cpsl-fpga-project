@@ -13,4 +13,4 @@
 - **I/O standards and pin banks:** what a pin can do depends on its bank. ([K1](../lessons/K1-lvds.md))
 
 ## Coming up
-From the [plan](../dca1000-removal/PLAN.md): **K7b** (software controls my logic through AXI GPIO), **K10** (AXI-Stream + DMA into memory), **K12** (my first hardware accelerator: an FFT in the DMA loop, timed against NumPy). After that, the paused capstones: a backprojection kernel, sizing (does it fit on the chip?), a bit-width study, and HLS (hardware from C++).
+From the [plan](../dca1000-removal/PLAN.md): **K7b** (software controls my logic through AXI GPIO), **K10** (AXI-Stream + DMA into memory), **K12** (learning the lab's working range–Doppler accelerator: corner turn, HLS, overflow handling, verifying and timing it). After that, the paused capstones: a backprojection kernel, sizing (does it fit on the chip?), a bit-width study, and HLS (hardware from C++).

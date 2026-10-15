@@ -1,6 +1,8 @@
 # DCA1000 removal
 
-**Goal (my main contribution to the lab):** today the chain is radar → DCA1000 capture board → Ethernet → PC. The goal is radar → Kria: the Kria's FPGA receives the radar's LVDS data itself, rebuilds the samples, puts them in memory and configures the radar, which is everything the DCA1000 does now.
+**Goal (my main contribution to the lab):** today the chain is radar → DCA1000 capture board → Ethernet → Kria (or a PC). The goal is radar → Kria directly: the Kria's FPGA receives the radar's LVDS data itself, rebuilds the samples, puts them in memory and configures the radar, which is everything the DCA1000 does now.
+
+**Why it matters now (2026-10-14):** the lab's range–Doppler processing already runs in the Kria's FPGA, so the slow part is getting data in: the Ethernet hop and the software that receives the packets. Removing the DCA1000 removes both, and it's the lab's stated next hardware step.
 
 **First step:** get two Kria boards talking over a serial link (single-ended on the KR260's 3.3 V PMOD pins first, true LVDS later), shown by one board lighting an LED on the other. I'm helping a labmate with this.
 
