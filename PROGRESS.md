@@ -11,10 +11,10 @@
 ### DCA1000 removal ([section](dca1000-removal/)), main focus
 | Track | Progress | |
 |---|---|---|
-| Kria link lessons (K1–K11 + K7b), [plan](dca1000-removal/PLAN.md) | `█████░░░░░░░` | 5 / 12: K1, K2, K3, K4, K7 done |
+| Kria link lessons (K1–K11 + K7b), [plan](dca1000-removal/PLAN.md) | `██████░░░░░░` | 6 / 12: K1, K2, K3, K4, K5, K7 done |
 | Lab setup (board login, Vivado on laptop, wiring, first bitstream, PYNQ) | `█████` | 5 / 5 ✓ |
 
-Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-protocols.md) · [K3 flip-flops, counters, shift registers](lessons/K3-flipflops-counters-shift.md) · [K4 Verilog: counter, transmitter, receiver](lessons/K4-verilog-counter.md) · K7 first design on the board ([lab guide](dca1000-removal/LAB-DAY-1-LAPTOP.md))
+Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-protocols.md) · [K3 flip-flops, counters, shift registers](lessons/K3-flipflops-counters-shift.md) · [K4 Verilog: counter, transmitter, receiver](lessons/K4-verilog-counter.md) · [K5 link in simulation](lessons/K5-serial-link-sim.md) · K7 first design on the board ([lab guide](dca1000-removal/LAB-DAY-1-LAPTOP.md))
 
 ### FPGA and hardware acceleration ([section](fpga-acceleration/))
 | Track | Progress | |
@@ -47,17 +47,17 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 | 2026-10-14 | DCA1000 | **Board online + PYNQ installed:** David got the KR260 onto a network with internet (verified ping, HTTPS to GitHub, correct clock). Installed Kria-PYNQ (`install.sh -b KR260`, ~30 min, run inside `tmux` so an SSH drop didn't kill it). Jupyter runs on the board at port 9090. Laptop must stay on the lab router's Ethernet to reach the board. |
 | 2026-10-14 | DCA1000 | **Loaded my design from Python:** uploaded `dai_loopback.bit` + `dai_loopback.hwh` (copied from the Vivado project's `hw_handoff` folder) to Jupyter and ran `Overlay("dai_loopback.bit")`. LED blinks. One Python line replaces the dtbo/shell.json/xmutil steps. Learned: board shell, laptop PowerShell and the Jupyter notebook each take different commands. |
 | 2026-10-14 | DCA1000 | **K4 done:** transmitter (shift right, reload, `frame` on bit 0) and receiver (`rx <= {din, rx[7:1]}`, latch `word` on `frame`). Learned the lab's PMOD loopback receiver uses the same line. Kria link lessons: 5/12 |
-| 2026-10-14 | FPGA | **Learned the lab's current baseline:** the existing FPGA design does FFT + range + CFAR, and "faster" is measured against a PYNQ Python script on the Kria's ARM cores. Data path today: radar → DCA1000 → Ethernet → PC → Kria. |
+| 2026-10-14 | FPGA | **Learned the lab's current baseline:** the existing FPGA design does FFT + range + CFAR, and "faster" is measured against a PYNQ Python script on the Kria's ARM cores. Data path today: radar → DCA1000 → Ethernet → PC → Kria. *(Corrected the same day by Person A's write-up: CFAR isn't in the FPGA yet, and the data goes to the Kria, not a PC.)* |
+| 2026-10-15 | DCA1000 | **K5 done:** transmitter + receiver linked in simulation (`word` = b2 at 165 ns). Delaying the data 1 and 2 clocks gave 65 and ca: the bit-alignment problem. Read a real 1 MHz PMOD loopback module: 200 clocks per bit sampled in the middle (survives ~100 clocks of delay), an IDLE/SHIFT/OUTPUT state machine, and the AXI-Stream `tvalid`/`tready` handshake. Kria link lessons: 6/12 |
 
 ## Up next
 
 **DCA1000 removal**
-- K5: transmitter + receiver in one simulation, then read the lab's `serial_loopback.v`
+- K6: LVDS pins in Vivado (`IBUFDS`/`OBUFDS`, the XDC file)
 - **Next time I meet Person B, ask:** which Vivado version she uses; what her `GPIO_0`–`GPIO_4` connect to; what feeds her DMA's `S_AXIS_S2MM`; can she export her block design (`write_bd_tcl`) or share the project
 
 **FPGA and hardware acceleration**
 - K7b (AXI GPIO from Python) once PYNQ is on the board
-- Lesson 5: the AXI-Stream handshake (feeds K10)
 
 **Radar**
 - TI mmWave deck from slide 17
