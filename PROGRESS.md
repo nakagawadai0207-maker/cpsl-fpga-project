@@ -50,6 +50,16 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 | 2026-10-14 | FPGA | **Learned the lab's current baseline:** the existing FPGA design does FFT + range + CFAR, and "faster" is measured against a PYNQ Python script on the Kria's ARM cores. Data path today: radar → DCA1000 → Ethernet → PC → Kria. *(Corrected the same day by Person A's write-up: CFAR isn't in the FPGA yet, and the data goes to the Kria, not a PC.)* |
 | 2026-10-15 | DCA1000 | **K5 done:** transmitter + receiver linked in simulation (`word` = b2 at 165 ns). Delaying the data 1 and 2 clocks gave 65 and ca: the bit-alignment problem. Read a real 1 MHz PMOD loopback module: 200 clocks per bit sampled in the middle (survives ~100 clocks of delay), an IDLE/SHIFT/OUTPUT state machine, and the AXI-Stream `tvalid`/`tready` handshake. Kria link lessons: 6/12 |
 
+## Ready for the next lab visit (K7b: control a PMOD pin from Python)
+| Prep | Progress | |
+|---|---|---|
+| Before going | `█░░░` | 1 / 4 |
+
+- [x] Lab's LED test design (`led_gpio.bit` + `.hwh`) on my laptop
+- [ ] Learn what an AXI GPIO is and the Python lines that drive it
+- [ ] Know the wiring: LED on PMOD1 instead of PMOD4
+- [ ] Person B questions ready (below)
+
 ## Up next
 
 **DCA1000 removal**
