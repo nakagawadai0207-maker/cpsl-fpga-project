@@ -63,11 +63,10 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 ## Up next
 
 **DCA1000 removal**
-- K6: LVDS pins in Vivado (`IBUFDS`/`OBUFDS`, the XDC file)
+- K7b at the next lab visit, then K10 (AXI-Stream + DMA: samples into memory) before K6. K6, K8 and K9 (true LVDS) wait on the CPSL carrier board.
 - **Next time I meet Person B, ask:** which Vivado version she uses; what her `GPIO_0`–`GPIO_4` connect to; what feeds her DMA's `S_AXIS_S2MM`; can she export her block design (`write_bd_tcl`) or share the project
 
 **FPGA and hardware acceleration**
-- K7b (AXI GPIO from Python) once PYNQ is on the board
 
 **Radar**
 - TI mmWave deck from slide 17

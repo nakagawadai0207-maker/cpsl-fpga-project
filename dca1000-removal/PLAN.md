@@ -124,6 +124,8 @@ Each lesson is taught in chat in small chunks with a check after each one, then 
 - **Reading:** H&H §4.1–4.4 (SystemVerilog column)
 - **Do:** write a counter and a shift register yourself.
 
+> **Order change (2026-10-15):** after K5, do K7b at the next lab visit, then K10, then K6. K10 (samples into memory) is the biggest DCA1000 step possible on the KR260 alone; K6, K8 and K9 need true LVDS pins, which means the CPSL carrier board.
+
 ### K5. Build the whole link in simulation 💻
 - Write a **transmitter**: a shift register that sends an 8-bit word, plus a clock output and a frame pulse at the start of each word.
 - Write a **receiver**: it shifts bits in on the clock, and on the frame pulse it latches the word and sets `led <= word[0]`.
