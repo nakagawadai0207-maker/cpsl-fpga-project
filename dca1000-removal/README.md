@@ -11,6 +11,7 @@
 - **Every serial link** has to solve when to read each bit and where a word starts; the radar sends a clock and a frame signal for that. ([K2](../lessons/K2-serial-protocols.md))
 - **A serial receiver** is a shift register plus a counter. ([K3](../lessons/K3-flipflops-counters-shift.md), [K4](../lessons/K4-verilog-counter.md))
 - **The link in simulation:** if the data arrives even one bit-time off from the frame marker, every word comes out shifted with a bit from its neighbour, and nothing flags it. Slow links fix this by sampling in the middle of long bits; the radar's fast lanes need the frame clock and adjustable delays (K9). Blocks pass words with the AXI-Stream `tvalid`/`tready` handshake. ([K5](../lessons/K5-serial-link-sim.md))
+- **Python controlling the PL:** Python writes and reads AXI GPIO registers to drive and read PMOD pins. One write takes ~13.7 µs, about 8,200× longer than a radar LVDS bit, so the FPGA must receive the bits and Python only reads finished data. ([K7b](../lessons/K7b-axi-gpio-python.md))
 - **Samples into memory** go through AXI and DMA between the FPGA (PL) and processor (PS). ([Lesson 1](../lessons/01-fpga-mental-model.md))
 - **Sample format:** how two 16-bit I/Q values pack into one 32-bit word. ([Lesson 4](../lessons/04-fixed-point.md))
 - **On the real board:** the full Vivado flow, loading with `xmutil`, and a loopback test through two PMOD pins. ([lab day 1](LAB-DAY-1-LAPTOP.md))

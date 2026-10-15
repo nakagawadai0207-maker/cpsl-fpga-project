@@ -11,10 +11,10 @@
 ### DCA1000 removal ([section](dca1000-removal/)), main focus
 | Track | Progress | |
 |---|---|---|
-| Kria link lessons (K1–K11 + K7b), [plan](dca1000-removal/PLAN.md) | `██████░░░░░░` | 6 / 12: K1, K2, K3, K4, K5, K7 done |
+| Kria link lessons (K1–K11 + K7b), [plan](dca1000-removal/PLAN.md) | `███████░░░░░` | 7 / 12: K1, K2, K3, K4, K5, K7, K7b done |
 | Lab setup (board login, Vivado on laptop, wiring, first bitstream, PYNQ) | `█████` | 5 / 5 ✓ |
 
-Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-protocols.md) · [K3 flip-flops, counters, shift registers](lessons/K3-flipflops-counters-shift.md) · [K4 Verilog: counter, transmitter, receiver](lessons/K4-verilog-counter.md) · [K5 link in simulation](lessons/K5-serial-link-sim.md) · K7 first design on the board ([lab guide](dca1000-removal/LAB-DAY-1-LAPTOP.md))
+Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-protocols.md) · [K3 flip-flops, counters, shift registers](lessons/K3-flipflops-counters-shift.md) · [K4 Verilog: counter, transmitter, receiver](lessons/K4-verilog-counter.md) · [K5 link in simulation](lessons/K5-serial-link-sim.md) · K7 first design on the board ([lab guide](dca1000-removal/LAB-DAY-1-LAPTOP.md)) · [K7b pins from Python](lessons/K7b-axi-gpio-python.md)
 
 ### FPGA and hardware acceleration ([section](fpga-acceleration/))
 | Track | Progress | |
@@ -51,8 +51,9 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 | 2026-10-15 | DCA1000 | **K5 done:** transmitter + receiver linked in simulation (`word` = b2 at 165 ns). Delaying the data 1 and 2 clocks gave 65 and ca: the bit-alignment problem. Read a real 1 MHz PMOD loopback module: 200 clocks per bit sampled in the middle (survives ~100 clocks of delay), an IDLE/SHIFT/OUTPUT state machine, and the AXI-Stream `tvalid`/`tready` handshake. Kria link lessons: 6/12 |
 | 2026-10-15 | DCA1000 | **Ready for K7b:** learned the AXI GPIO (DATA register = pin values, TRI register = direction, 0 = output; starts as all inputs, so `trimask = 0` first), the write mask, and hex-to-binary. Next lab visit: switch an LED on PMOD1 from Python. |
 | 2026-10-15 | DCA1000 | **Prepared K7c:** inputs (`trimask = 0x02`), reading one bit with `(value >> n) & 1`, sending a byte from Python through a jumper, and timing a write. Takeaway: if a Python write takes ~8 µs, that's ~4,700× longer than one radar LVDS bit (~1.7 ns), so the bits must be received by FPGA logic; Python only controls it and reads finished data. |
+| 2026-10-15 | DCA1000 | **K7b + K7c done at the lab:** switched an LED on PMOD1 from Python (AXI GPIO), read pin 3 through a pin 1 → pin 3 jumper (read 3), sent `10110010` bit by bit and got it back, and measured **13.7 µs per Python write**, about 8,200× slower than one radar LVDS bit. Wrote all the code myself. Kria link lessons: 7/12 |
 
-## Ready for the next lab visit (K7b: control a PMOD pin from Python, plus K7c)
+## Lab visit 2026-10-15 (K7b + K7c) ✓ done
 | Prep | Progress | |
 |---|---|---|
 | Before going | `████` | 4 / 4 ✓ |
@@ -66,7 +67,7 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 ## Up next
 
 **DCA1000 removal**
-- K7b at the next lab visit, then K10 (AXI-Stream + DMA: samples into memory) before K6. K6, K8 and K9 (true LVDS) wait on the CPSL carrier board.
+- K10 next (AXI-Stream + DMA: samples into memory), before K6. K6, K8 and K9 (true LVDS) wait on the CPSL carrier board.
 - **Next time I meet Person B, ask:** which Vivado version she uses; what her `GPIO_0`–`GPIO_4` connect to; what feeds her DMA's `S_AXIS_S2MM`; can she export her block design (`write_bd_tcl`) or share the project
 
 **FPGA and hardware acceleration**
