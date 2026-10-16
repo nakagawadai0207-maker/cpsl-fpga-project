@@ -14,5 +14,6 @@ All my lessons, in the order I did them. They aren't owned by one section: each 
 | K4 | [Verilog](K4-verilog-counter.md): modules, `reg`, `always`, `assign`, `if`/`else`; a serial transmitter and receiver; my mistakes writing `loopback.v` | FPGA · DCA1000 |
 | K5 | [The serial link in simulation](K5-serial-link-sim.md): testbench, bit alignment, mid-bit sampling, state machines, the AXI-Stream handshake | DCA1000 · FPGA |
 | K7b | [Pins from Python (AXI GPIO)](K7b-axi-gpio-python.md): DATA/TRI registers, write mask, reading a pin, sending a byte, 13.7 µs per write | DCA1000 · FPGA |
+| K10 | [Into memory: AXI-Stream and DMA](K10-dma-into-memory.md): counter → DMA → DDR, read in PYNQ, all 1024 numbers arrived; the six system ideas | DCA1000 · FPGA |
 
 Hands-on work (lab guides, code, photos) lives in the section where it was done, e.g. [lab day 1](../dca1000-removal/LAB-DAY-1-LAPTOP.md). The full lesson plan is [here](../dca1000-removal/PLAN.md).

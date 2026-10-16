@@ -11,10 +11,10 @@
 ### DCA1000 removal ([section](dca1000-removal/)), main focus
 | Track | Progress | |
 |---|---|---|
-| Kria link lessons (K1–K11 + K7b), [plan](dca1000-removal/PLAN.md) | `███████░░░░░` | 7 / 12: K1, K2, K3, K4, K5, K7, K7b done |
+| Kria link lessons (K1–K11 + K7b), [plan](dca1000-removal/PLAN.md) | `████████░░░░` | 8 / 12: K1, K2, K3, K4, K5, K7, K7b, K10 done |
 | Lab setup (board login, Vivado on laptop, wiring, first bitstream, PYNQ) | `█████` | 5 / 5 ✓ |
 
-Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-protocols.md) · [K3 flip-flops, counters, shift registers](lessons/K3-flipflops-counters-shift.md) · [K4 Verilog: counter, transmitter, receiver](lessons/K4-verilog-counter.md) · [K5 link in simulation](lessons/K5-serial-link-sim.md) · K7 first design on the board ([lab guide](dca1000-removal/LAB-DAY-1-LAPTOP.md)) · [K7b pins from Python](lessons/K7b-axi-gpio-python.md)
+Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-protocols.md) · [K3 flip-flops, counters, shift registers](lessons/K3-flipflops-counters-shift.md) · [K4 Verilog: counter, transmitter, receiver](lessons/K4-verilog-counter.md) · [K5 link in simulation](lessons/K5-serial-link-sim.md) · K7 first design on the board ([lab guide](dca1000-removal/LAB-DAY-1-LAPTOP.md)) · [K7b pins from Python](lessons/K7b-axi-gpio-python.md) · [K10 DMA into memory](lessons/K10-dma-into-memory.md)
 
 ### FPGA and hardware acceleration ([section](fpga-acceleration/))
 | Track | Progress | |
@@ -54,6 +54,7 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 | 2026-10-15 | DCA1000 | **K7b + K7c done at the lab:** switched an LED on PMOD1 from Python (AXI GPIO), read pin 3 through a pin 1 → pin 3 jumper (read 3), sent `10110010` bit by bit and got it back, and measured **13.7 µs per Python write**, about 8,200× slower than one radar LVDS bit. Wrote all the code myself. Kria link lessons: 7/12 |
 | 2026-10-15 | DCA1000 | **K10 started:** learned what a DMA is (why reading a register loses numbers, buffers, the DMA's ADDRESS/LENGTH/STATUS registers, `tlast` ends the transfer). Wrote [`counter_stream.v`](dca1000-removal/code/k10/counter_stream.v) (AXI-Stream counter, counts only on a handshake, `tlast` every 1024 words) and its [testbench](dca1000-removal/code/k10/tb.v): 0 to 1023 with no number skipped across a `tready` pause, `tlast` = 1 on 1023. Next: Vivado block design. |
 | 2026-10-16 | DCA1000 | **K10 design + Python ready:** built the Vivado block design (Zynq, AXI DMA in simple mode with only the S2MM write channel, counter_stream; DMA registers at 0xA000_0000, DMA writes DDR through HPC0), bitstream timing met (WNS +5.658 ns). Wrote [`k10_dma.py`](dca1000-removal/code/k10/k10_dma.py): load the overlay, allocate a 1024-word buffer, `recvchannel.transfer` + `wait`, check it holds 0 to 1023. Next: run it on the KR260 at the lab. |
+| 2026-10-16 | DCA1000 | **K10 done on the KR260:** copied the files over with `scp`, ran [`k10_dma.py`](dca1000-removal/code/k10/k10_dma.py) in Jupyter: printed `[0 1 2 3 4 5 6 7]` and `True`. All 1024 numbers from my PL counter reached DDR memory through the DMA, in order, none missing. [Lesson page](lessons/K10-dma-into-memory.md). |
 
 ## Lab visit 2026-10-15 (K7b + K7c) ✓ done
 | Prep | Progress | |
@@ -69,7 +70,7 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 ## Up next
 
 **DCA1000 removal**
-- K10 next (AXI-Stream + DMA: samples into memory), before K6. K6, K8 and K9 (true LVDS) wait on the CPSL carrier board.
+- K10 done (2026-10-16). K6, K8 and K9 (true LVDS) wait on the CPSL carrier board; K11 needs K9. K12 (the lab's accelerator) doesn't need LVDS.
 - **Next time I meet Person B, ask:** which Vivado version she uses; what her `GPIO_0`–`GPIO_4` connect to; what feeds her DMA's `S_AXIS_S2MM`; can she export her block design (`write_bd_tcl`) or share the project
 
 **FPGA and hardware acceleration**

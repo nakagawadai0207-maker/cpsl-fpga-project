@@ -1,9 +1,10 @@
 # K10: counter_stream -> AXI DMA (S2MM) -> DDR, checked from Python (PYNQ).
 # Needs k10_dma.bit and k10_dma.hwh in the same folder (names must match).
+# Ran on the KR260 2026-10-16: printed [0 1 2 3 4 5 6 7] and True.
 from pynq import Overlay, allocate
 import numpy as np
 
-ol = Overlay("k10_dma.bit")      # load the design into the PL; reads k10_dma.hwh too
+ol = Overlay("/home/ubuntu/dai/k10_dma.bit")   # load into the PL; reads k10_dma.hwh next to it
 dma = ol.axi_dma_0               # handle to the DMA (registers at 0xA000_0000)
 
 buf = allocate(shape=(1024,), dtype=np.uint32)   # 1024 x 32-bit slots in DDR
