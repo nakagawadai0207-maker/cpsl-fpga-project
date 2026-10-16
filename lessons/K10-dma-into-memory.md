@@ -15,6 +15,30 @@ In K7c, Python read a pin once every 13.7 µs. A PL counter makes a new number e
 5. **DMA in simple mode.** Python writes ADDRESS (where the buffer starts), then LENGTH (writing it starts the DMA), then waits for STATUS = done, then reads the buffer. LENGTH is the maximum; `tlast` ends it.
 6. **The address map.** Every block the PS can reach has an address (here, the DMA's registers at `0xA000_0000`). The `.hwh` file carries this map to PYNQ, which is why the `.bit` and `.hwh` names must match.
 
+## Who does what, step by step
+
+| # | What happens | Who | Path |
+|---|---|---|---|
+| | **Setup** | | |
+| 1 | `Overlay(...)` loads the design into the PL and reads the `.hwh` | Python (PS) | setup |
+| 2 | `dma = ol.axi_dma_0` gets a handle to the DMA | Python (PS) | none |
+| 3 | `allocate(...)` reserves 1024 slots in DDR memory | Python (PS) | none |
+| | **Start: `transfer(buf)`** | | |
+| 4 | Write the buffer start address to DMA register `0xA000_0048` | Python (PS) | control |
+| 5 | Write the length (4096 bytes) to DMA register `0xA000_0058`; this starts the DMA | Python (PS) | control |
+| | **Filling the buffer (no Python)** | | |
+| 6 | Counter puts a number on `m_axis_tdata`, `tvalid` = 1 | PL (my Verilog) | data |
+| 7 | On a clock where `tvalid` and `tready` are both 1, the word moves into the DMA | PL (counter + DMA) | data |
+| 8 | DMA writes the word into DDR at the next address (+4) through HPC0 | PL (AXI DMA block) | data |
+| 9 | Counter adds 1, only after a handshake | PL (my Verilog) | inside counter |
+| 10 | Steps 6 to 9 repeat; on word 1023 `tlast` = 1 | PL | data |
+| 11 | DMA sees `tlast`, finishes, sets its status register to done | PL (AXI DMA block) | inside DMA |
+| | **Finish: `wait()` and check** | | |
+| 12 | Read status register `0xA000_0034` until it says done | Python (PS) | control |
+| 13 | `print(buf[0:8])` and `array_equal` read the buffer from DDR | Python (PS) | memory read |
+
+For the radar, only steps 6 and 9 change: the LVDS receiver (PL) replaces the counter. Register offsets checked against PYNQ's `pynq/lib/dma.py` (S2MM block at +0x30: status +0x04, address +0x18, length +0x28).
+
 ## What I built
 - [`counter_stream.v`](../dca1000-removal/code/k10/counter_stream.v): AXI-Stream counter. Counts only on a handshake, so a `tready` pause never skips a number; `tlast` every 1024 words. [Testbench](../dca1000-removal/code/k10/tb.v) passed in Icarus.
 - Vivado block design `k10_bd`: Zynq (KR260 preset), AXI DMA 7.1 (simple mode, S2MM only, 64-bit addresses, 14-bit length), my counter, smartconnects and reset block. Timing met: WNS +5.658 ns at 100 MHz.
