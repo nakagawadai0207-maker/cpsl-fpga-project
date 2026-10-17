@@ -18,6 +18,7 @@
 - **PYNQ on the board** (2026-10-14): Python on the board's ARM cores can load designs and move data to and from the FPGA, which is how radar samples will reach software. Long installs go inside `tmux` so a dropped SSH connection doesn't kill them.
 
 ## Plan and lab work
+- [**CUBE-BRIDGE.md**](CUBE-BRIDGE.md): current focus (2026-10-17), getting the decoded radar cube into the FFT accelerator
 - [**PLAN.md**](PLAN.md): the full lesson plan, K1–K12, and why each step matters
 - [Lab day 1, laptop + `xmutil` version](LAB-DAY-1-LAPTOP.md): what actually worked on 2026-10-13
 - [Lab day 1, original PYNQ version](LAB-DAY-1.md)

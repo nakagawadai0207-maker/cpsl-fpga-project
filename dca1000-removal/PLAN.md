@@ -1,5 +1,7 @@
 # Kria-to-Kria link: lesson plan
 
+> **Paused 2026-10-17:** I am working on the [cube bridge](CUBE-BRIDGE.md) first. The lab's carrier-board interface document (2026-10-17) confirmed 2 data lanes + clock at 600 Mb/s per lane on HP-bank pins at 1.8 V; the frame clock is not wired, so sample alignment in K9 will need another method.
+
 **Goal:** get two Kria boards talking over differential (LVDS) wires, and prove it by having one board turn on an LED on the other.
 
 **Why it matters:** this is the first step toward plugging the TI radar straight into a Kria. Today the chain is radar → DCA1000 capture board → Ethernet → Kria (or a PC). The goal is radar → Kria directly.
