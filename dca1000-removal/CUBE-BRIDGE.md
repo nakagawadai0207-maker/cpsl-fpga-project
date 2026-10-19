@@ -23,7 +23,7 @@ A software version of the decode-and-reorder already exists in the lab's code. S
 
 | Step | What | Status |
 |---|---|---|
-| C0 | Agree on the input and output formats with Person A and Person B | formats found in the code; waiting on their confirmation |
+| C0 | Agree on the input and output formats with Person A and Person B | ✓ confirmed by Person A and Person B 2026-10-19 |
 | C1 | Index math: where each (receiver, sample, chirp) value sits in one flat buffer | ✓ done 2026-10-19 ([c1.py](code/cube-bridge/c1.py)) |
 | C2 | Test pattern: fake data where every number encodes its own position, so any mix-up shows | ✓ done 2026-10-19 ([check_layout.py](code/cube-bridge/check_layout.py), [c2.py](code/cube-bridge/c2.py)) |
 | C3 | Fake target at a known distance and speed: the FFT must put it in the right bin | |
