@@ -25,3 +25,6 @@ for r in range(4):
 
 if ok:
 	print("PASS")
+
+words = cube.view(np.int32)   # same bytes, read as the 32-bit words the DMA sees
+print(words[1, 2, 5])         # Q * 65536 + I = 1005 * 65536 + 2 = 65863682
