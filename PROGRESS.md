@@ -58,6 +58,7 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 | 2026-10-16 | DCA1000 | **K10 done on the KR260:** copied the files over with `scp`, ran [`k10_dma.py`](dca1000-removal/code/k10/k10_dma.py) in Jupyter: printed `[0 1 2 3 4 5 6 7]` and `True`. All 1024 numbers from my PL counter reached DDR memory through the DMA, in order, none missing. [Lesson page](lessons/K10-dma-into-memory.md). |
 | 2026-10-17 | DCA1000 | **New focus: the cube bridge.** Person B decodes the raw radar data into a cube; Person A's accelerator runs the FFTs; I bridge the two. Found both formats in the lab code: the radar sends chirp → receiver → sample, the accelerator reads receiver → sample → chirp, so the bridge reorders. Read the lab's carrier-board interface document (frame clock not wired). Paused the Kria link plan. Learned to sync a fork with `upstream` and git LFS. [Plan](dca1000-removal/CUBE-BRIDGE.md). |
 | 2026-10-19 | DCA1000 | **C1 (index math) done:** worked out by hand where one value sits in the radar's order (chirp × 252 + receiver × 63 + sample) and in the accelerator's order (receiver × 13,230 + sample × 210 + chirp), and the reverse with `%` and `//`. Wrote [`c1.py`](dca1000-removal/code/cube-bridge/c1.py): `reshape`, `transpose`, then `ascontiguousarray` to really move the data; position 13,655 of the accelerator's buffer holds radar value 1,325, and its first three values are 0, 252, 504. |
+| 2026-10-19 | DCA1000 | **C2 started:** wrote [`check_layout.py`](dca1000-removal/code/cube-bridge/check_layout.py), which loops over all 52,920 positions of the accelerator's buffer and checks each holds the right radar value. Prints PASS on the correct reorder; with a planted bug it prints `WRONG at 13655 rx 1 sample 2 chirp 5 got 1262 expected 1325`. The checker itself caught my own swapped formula first. |
 
 ## Lab visit 2026-10-15 (K7b + K7c) ✓ done
 | Prep | Progress | |
@@ -73,7 +74,7 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 ## Up next
 
 **DCA1000 removal**
-- **Current:** [cube bridge](dca1000-removal/CUBE-BRIDGE.md), C1 done; next C2 (a test pattern that proves the layout). Confirm the input/output formats with Person A and Person B.
+- **Current:** [cube bridge](dca1000-removal/CUBE-BRIDGE.md), C2 in progress: layout checker works on position numbers; next, real int16 I/Q data. Confirm the input/output formats with Person A and Person B.
 - K10 done (2026-10-16). K6, K8 and K9 (true LVDS) wait on the CPSL carrier board; K11 needs K9. K12 (the lab's accelerator) doesn't need LVDS.
 - **Next time I meet Person B, ask:** which Vivado version she uses; what her `GPIO_0`–`GPIO_4` connect to; what feeds her DMA's `S_AXIS_S2MM`; can she export her block design (`write_bd_tcl`) or share the project
 
