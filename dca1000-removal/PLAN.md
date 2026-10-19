@@ -117,13 +117,11 @@ Each lesson is taught in chat in small chunks with a check after each one, then 
 - **Flip-flop:** stores 1 bit and updates on a clock edge
 - **Counter:** counts clock edges (to know "this is bit 5 of 8")
 - **Shift register:** moves bits out one at a time (transmit) or collects them in one at a time (receive)
-- **Reading (H&H 2nd ed):** §3.2 Latches and Flip-Flops, §3.3 Synchronous Logic Design, §5.4 Sequential Building Blocks (counters, shift registers)
 - **Check:** draw an 8-bit shift register receiving `10110010`, clock by clock.
 
 ### K4. Just enough Verilog 💻
 - `module`, ports, `wire`/`reg`, `assign`, and `always @(posedge clk)`. That's all the link needs.
 - **HDLBits:** Getting Started → Verilog Language: Basics, Vectors, Procedures → Circuits → Sequential Logic: Latches and Flip-Flops, Counters, Shift Registers
-- **Reading:** H&H §4.1–4.4 (SystemVerilog column)
 - **Do:** write a counter and a shift register yourself.
 
 > **Order change (2026-10-15):** after K5, do K7b at the next lab visit, then K10, then K6. K10 (samples into memory) is the biggest DCA1000 step possible on the KR260 alone; K6, K8 and K9 need true LVDS pins, which means the CPSL carrier board.

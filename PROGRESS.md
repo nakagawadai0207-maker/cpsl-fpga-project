@@ -22,7 +22,6 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 |---|---|---|
 | Main FPGA lesson plan (L0–L14; L2–L3 are the radar lessons above) | `█████░░░░░░░░░░░░` | 5 / 17, paused behind the DCA1000 work |
 | K12 first hardware accelerator | `░` | 0 / 1 |
-| Harris & Harris ch 1–4 | `░░░░` | paused; needed sections pulled into K3–K4 |
 
 ## Log
 
@@ -35,8 +34,7 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 | 2026-10-09 → 10-11 | Radar | **Lesson 2 done:** complex numbers, the FFT as a tuning dial, FMCW chirp → beat frequency, range resolution |
 | 2026-10-11 | Radar | **Lesson 3 done:** aliasing (4.5 m target shows at 0.57 m), resolution vs. FFT size, choosing an FFT size. Learned to run Python scripts from PowerShell |
 | 2026-10-11 | FPGA | **Lesson 4 done:** two's complement, Q1.15 fixed point, FFT overflow and scaling, packing complex samples, MSB-aligned ADC samples |
-| 2026-10-11 | FPGA | Started Harris & Harris ch 1 |
-| 2026-10-12 | DCA1000 | Started the Kria-to-Kria link sub-project (helping a labmate replace the DCA1000 capture board). Paused full H&H read-through. |
+| 2026-10-12 | DCA1000 | Started the Kria-to-Kria link sub-project (helping a labmate replace the DCA1000 capture board). |
 | 2026-10-12 | DCA1000 | **K1 done:** LVDS (P − N, noise cancelling, 100 Ω termination, the radar's 4 pairs, DDR clock, bit alignment) |
 | 2026-10-12 | DCA1000 | **K2 done:** serial protocols (timing vs framing; UART, SPI, I²C, source-synchronous LVDS) |
 | 2026-10-12 | DCA1000 | **K3 done:** flip-flops, counters (LED blink math), shift registers (serial receiver = shift register + counter) |
