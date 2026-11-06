@@ -20,7 +20,7 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 ### Ethernet demo ([section](ethernet-demo/)), current focus
 | Track | Progress | |
 |---|---|---|
-| The path (E1–E6) and optimizing it (O1–O5), [plan](ethernet-demo/PLAN.md) | `███░░░░░░░░` | 3 / 11: [E1–E2](lessons/E1-E2-packets-to-frame.md), [E3](lessons/E3-bytes-to-numbers.md) done |
+| The path (E1–E6) and optimizing it (O1–O5), [plan](ethernet-demo/PLAN.md) | `████░░░░░░░` | 4 / 11: [E1–E2](lessons/E1-E2-packets-to-frame.md), [E3](lessons/E3-bytes-to-numbers.md), [E4](lessons/E4-numbers-to-cube.md) done |
 
 ### FPGA and hardware acceleration ([section](fpga-acceleration/))
 | Track | Progress | |
@@ -68,6 +68,7 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 | 2026-11-06 | Ethernet demo | PCB for direct LVDS not working; pivoted to an Ethernet (DCA1000) demo. New section and lesson plan E1–E6, O1–O5 |
 | 2026-11-06 | Ethernet demo | E1–E2 done: packet header, placing bytes with `//` and `%`, lost packets |
 | 2026-11-06 | Ethernet demo | E3 done: bytes → signed 16-bit numbers → Q-first I/Q samples |
+| 2026-11-06 | Ethernet demo | E4 done: sample arrival order, reshape into the (chirp, RX, sample) cube |
 
 ## Lab visit 2026-10-15 (K7b + K7c) ✓ done
 | Prep | Progress | |
@@ -83,7 +84,7 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 ## Up next
 
 **Ethernet demo** (current focus)
-- E4: numbers → the (chirp, RX, sample) cube. [Plan](ethernet-demo/PLAN.md)
+- E5: cube → accelerator (reorder, pack, flush, DMA). [Plan](ethernet-demo/PLAN.md)
 
 **DCA1000 removal** (on hold)
 - [Cube bridge](dca1000-removal/CUBE-BRIDGE.md): C0–C4 done, C4 ran on the Kria 2026-11-02. C5–C6 on hold after the pivot.
