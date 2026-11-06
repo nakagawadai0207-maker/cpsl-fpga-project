@@ -16,5 +16,6 @@ All my lessons, in the order I did them. They aren't owned by one section: each 
 | K7b | [Pins from Python (AXI GPIO)](K7b-axi-gpio-python.md): DATA/TRI registers, write mask, reading a pin, sending a byte, 13.7 µs per write | DCA1000 · FPGA |
 | K10 | [Into memory: AXI-Stream and DMA](K10-dma-into-memory.md): counter → DMA → DDR, read in PYNQ, all 1024 numbers arrived; the six system ideas | DCA1000 · FPGA |
 | E1–E2 | [Packets to one frame](E1-E2-packets-to-frame.md): DCA1000 packet header (sequence number, byte count), `//` and `%` to place bytes, lost packets, hand-off | Ethernet demo · Radar |
+| E3 | [Bytes to I/Q numbers](E3-bytes-to-numbers.md): little-endian, two's complement, Q-first groups of four | Ethernet demo · Radar |
 
 Hands-on work (lab guides, code, photos) lives in the section where it was done, e.g. [lab day 1](../dca1000-removal/LAB-DAY-1-LAPTOP.md). The full lesson plan is [here](../dca1000-removal/PLAN.md).
