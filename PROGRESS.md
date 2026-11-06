@@ -8,14 +8,19 @@
 | Radar lessons (L2 signals/FFT/FMCW, L3 FFT experiments) | `██` | 2 / 2 ✓ |
 | TI *Intro to mmWave Sensing* deck | `██░░░░░░░░` | slides 1–16 of 70 read (as of 2026-10-09) |
 
-### DCA1000 removal ([section](dca1000-removal/)), main focus
+### DCA1000 removal ([section](dca1000-removal/)), on hold since 2026-11-06
 | Track | Progress | |
 |---|---|---|
 | Kria link lessons (K1–K11 + K7b), [plan](dca1000-removal/PLAN.md), paused 2026-10-17 | `████████░░░░` | 8 / 12: K1, K2, K3, K4, K5, K7, K7b, K10 done |
-| Cube bridge (C0–C6), [plan](dca1000-removal/CUBE-BRIDGE.md), current focus | `███░░░░` | 3 / 7, C0, C1, C2 done |
+| Cube bridge (C0–C6), [plan](dca1000-removal/CUBE-BRIDGE.md) | `█████░░` | 5 / 7, C0–C4 done (C4 ran on the Kria 2026-11-02); C5–C6 on hold after the pivot |
 | Lab setup (board login, Vivado on laptop, wiring, first bitstream, PYNQ) | `█████` | 5 / 5 ✓ |
 
 Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-protocols.md) · [K3 flip-flops, counters, shift registers](lessons/K3-flipflops-counters-shift.md) · [K4 Verilog: counter, transmitter, receiver](lessons/K4-verilog-counter.md) · [K5 link in simulation](lessons/K5-serial-link-sim.md) · K7 first design on the board ([lab guide](dca1000-removal/LAB-DAY-1-LAPTOP.md)) · [K7b pins from Python](lessons/K7b-axi-gpio-python.md) · [K10 DMA into memory](lessons/K10-dma-into-memory.md)
+
+### Ethernet demo ([section](ethernet-demo/)), current focus
+| Track | Progress | |
+|---|---|---|
+| The path (E1–E6) and optimizing it (O1–O5), [plan](ethernet-demo/PLAN.md) | `░░░░░░░░░░░` | 0 / 11, started 2026-11-06 |
 
 ### FPGA and hardware acceleration ([section](fpga-acceleration/))
 | Track | Progress | |
@@ -60,6 +65,7 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 | 2026-10-19 | DCA1000 | **C2 test pattern with real int16 I/Q:** found that position numbers overflow int16 (52,919 > 32,767), so each sample now carries its own label: I = sample, Q = receiver × 1000 + chirp. Wrote [`c2.py`](dca1000-removal/code/cube-bridge/c2.py): builds the fake frame in the radar's order (210, 4, 63, 2), reorders with `transpose(1, 2, 0, 3)` + `ascontiguousarray`, checks every slot. PASS; planted bug caught: `WRONG at rx 1 sample 2 chirp 5 got [2 1]`. |
 | 2026-10-19 | DCA1000 | **C2 done:** viewed the cube as the 32-bit words the DMA reads (`cube.view(np.int32)`): word = Q × 65,536 + I, so slot (I = 2, Q = 1005) is 65,863,682. Swapping I and Q here would mirror every target. |
 | 2026-10-19 | DCA1000 | **C0 done:** Person A and Person B confirmed the cube bridge plan. |
+| 2026-11-06 | Ethernet demo | PCB for direct LVDS not working; pivoted to an Ethernet (DCA1000) demo. New section and lesson plan E1–E6, O1–O5 |
 
 ## Lab visit 2026-10-15 (K7b + K7c) ✓ done
 | Prep | Progress | |
@@ -74,8 +80,11 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 
 ## Up next
 
-**DCA1000 removal**
-- **Current:** [cube bridge](dca1000-removal/CUBE-BRIDGE.md), C2 in progress: layout checker works on position numbers; C1 and C2 done; next C3 (a fake target at a known distance and speed). Confirm the input/output formats with Person A and Person B.
+**Ethernet demo** (current focus)
+- E1: what's inside one DCA1000 UDP packet. [Plan](ethernet-demo/PLAN.md)
+
+**DCA1000 removal** (on hold)
+- [Cube bridge](dca1000-removal/CUBE-BRIDGE.md): C0–C4 done, C4 ran on the Kria 2026-11-02. C5–C6 on hold after the pivot.
 - K10 done (2026-10-16). K6, K8 and K9 (true LVDS) wait on the CPSL carrier board; K11 needs K9. K12 (the lab's accelerator) doesn't need LVDS.
 - **Next time I meet Person B, ask:** which Vivado version she uses; what her `GPIO_0`–`GPIO_4` connect to; what feeds her DMA's `S_AXIS_S2MM`; can she export her block design (`write_bd_tcl`) or share the project
 
