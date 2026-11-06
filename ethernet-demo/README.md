@@ -13,6 +13,7 @@
 - **Bytes → numbers:** two bytes, low first, make one signed 16-bit number; the numbers come in groups of four, `[Q_a, Q_b, I_a, I_b]`, holding two complex samples. ([E3](../lessons/E3-bytes-to-numbers.md))
 - **Numbers → cube:** samples arrive chirp by chirp, RX by RX (252 per chirp); `reshape(210, 4, 63)` reads that line as the (chirp, RX, sample) cube without moving data. ([E4](../lessons/E4-numbers-to-cube.md))
 - **Cube → accelerator:** reorder to (RX, sample, chirp), pack 16-bit (I, Q) pairs into the DMA buffer, flush, DMA through the fabric's FFTs. The samples go integer → float → integer on the way, and only the integer steps matter for the hardware path. ([E5](../lessons/E5-cube-to-accelerator.md))
+- **Whole path:** receiver → decode (incl. reorder) → pack → DMA + FFTs. Four software steps on the ARM come before the fabric; those are what part 2 looks at. ([E6](../lessons/E6-whole-path.md))
 
 ## Plan
 - [**PLAN.md**](PLAN.md): lessons E1–E6 (the path) and O1–O5 (optimizing it)
