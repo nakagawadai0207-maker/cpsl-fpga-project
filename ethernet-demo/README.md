@@ -9,7 +9,7 @@
 2. Then find out whether that path can be made faster by cutting out middle steps (in software or in HDL), and whether it's worth doing.
 
 ## What I've learned for this
-- (filled in as lessons finish)
+- **Packets → frame:** each DCA1000 packet carries a sequence number (spots lost packets) and a byte count (where its bytes go). Frame = count // frame size, position = count % frame size, so a lost packet only leaves a hole in its own frame. ([E1–E2](../lessons/E1-E2-packets-to-frame.md))
 
 ## Plan
 - [**PLAN.md**](PLAN.md): lessons E1–E6 (the path) and O1–O5 (optimizing it)
