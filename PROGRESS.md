@@ -21,6 +21,7 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 | Track | Progress | |
 |---|---|---|
 | The path (E1–E6) and optimizing it (O1–O5), [plan](ethernet-demo/PLAN.md) | `████████░░░` | 8 / 11: part 1 done, [O1–O2](lessons/O1-O2-measure-and-worth-it.md) and the [frame-rate experiment](lessons/O-frame-rate-experiment.md) done ([E1–E2](lessons/E1-E2-packets-to-frame.md), [E3](lessons/E3-bytes-to-numbers.md), [E4](lessons/E4-numbers-to-cube.md), [E5](lessons/E5-cube-to-accelerator.md), [E6](lessons/E6-whole-path.md)) |
+| Multi-core capture (M1–M8), [plan](ethernet-demo/PLAN.md#part-3-multi-core-capture-chosen-2026-11-08) | `░░░░░░░░` | 0 / 8, planned 2026-11-08; next: M1 |
 
 ### FPGA and hardware acceleration ([section](fpga-acceleration/))
 | Track | Progress | |
@@ -88,7 +89,8 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 ## Up next
 
 **Ethernet demo** (current focus)
-- Optional: 4-core split (capture in its own process) to go above ~67 fps; coordinate with the lab member who owns the code. [Plan](ethernet-demo/PLAN.md)
+- M1: process vs thread and the GIL, timed on the Kria. [Multi-core plan](ethernet-demo/PLAN.md#part-3-multi-core-capture-chosen-2026-11-08)
+- Ask my mentor: for drones, is the problem the speed limit (radar config) or the update rate (this project)?
 
 **DCA1000 removal** (on hold)
 - [Cube bridge](dca1000-removal/CUBE-BRIDGE.md): C0–C4 done, C4 ran on the Kria 2026-11-02. C5–C6 on hold after the pivot.
