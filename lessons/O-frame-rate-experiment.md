@@ -13,7 +13,7 @@ Part of the [Ethernet demo](../ethernet-demo/). Done 2026-11-08 on the lab's Kri
   - every new packet waits behind the whole buffer, which gave a delay of several seconds (delay = buffer size / read rate)
   - packets that don't fit are thrown away whole, and each one leaves a hole of zeros in its frame, which shows as flashing
 - A bigger buffer doesn't fix this. It only makes the delay longer. Big buffers help only when the reader is faster on average and just has short busy moments.
-- **A higher frame rate fixes fast-motion speed readings.** At 20 fps, a fast hand move wrapped around the speed axis and showed up on the wrong side. At 50 fps the same move read correctly.
+- **Faster chirps fix fast-motion speed readings.** At 20 fps, a fast hand move wrapped around the speed axis and showed up on the wrong side. At 50 fps the same move read correctly. *Correction:* what fixed it was the shorter idle time between chirps that the faster setting uses, not the frame rate itself. Max speed = wavelength ÷ (4 × time between chirps from the same transmitter). A 33 fps setting with short idle times reaches the same limit as 50 fps.
 - The best usable rate today is about 2.5× the default, with no drops and no delay. To go higher, capture needs its own process (Python threads can't run in parallel because of the GIL).
 
 ## Mistakes I made
