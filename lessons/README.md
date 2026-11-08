@@ -20,5 +20,7 @@ All my lessons, in the order I did them. They aren't owned by one section: each 
 | E4 | [Line of samples to the cube](E4-numbers-to-cube.md): arrival order chirp → RX → sample, `reshape(210, 4, 63)` | Ethernet demo · Radar |
 | E5 | [Cube into the accelerator](E5-cube-to-accelerator.md): reorder, pack into `ibuf`, flush, DMA; the int → float → int middleman | Ethernet demo · FPGA |
 | E6 | [The whole path](E6-whole-path.md): order of steps and who does each (ARM software vs fabric) | Ethernet demo · FPGA |
+| O1–O2 | [Measure, and is it worth it?](O1-O2-measure-and-worth-it.md): timing decode with `perf_counter`, frame budget = 1000/fps, the radar sets the rate, capture vs decode, 4-core split vs Ethernet in fabric | Ethernet demo · FPGA |
+| O-exp | [Frame-rate experiment](O-frame-rate-experiment.md): processing vs capture limits, receive-buffer delay and drops, speed wrapping at low frame rate | Ethernet demo · Radar |
 
 Hands-on work (lab guides, code, photos) lives in the section where it was done, e.g. [lab day 1](../dca1000-removal/LAB-DAY-1-LAPTOP.md). The full lesson plan is [here](../dca1000-removal/PLAN.md).

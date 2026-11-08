@@ -20,7 +20,7 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 ### Ethernet demo ([section](ethernet-demo/)), current focus
 | Track | Progress | |
 |---|---|---|
-| The path (E1–E6) and optimizing it (O1–O5), [plan](ethernet-demo/PLAN.md) | `██████░░░░░` | 6 / 11: part 1 done ([E1–E2](lessons/E1-E2-packets-to-frame.md), [E3](lessons/E3-bytes-to-numbers.md), [E4](lessons/E4-numbers-to-cube.md), [E5](lessons/E5-cube-to-accelerator.md), [E6](lessons/E6-whole-path.md)) |
+| The path (E1–E6) and optimizing it (O1–O5), [plan](ethernet-demo/PLAN.md) | `████████░░░` | 8 / 11: part 1 done, [O1–O2](lessons/O1-O2-measure-and-worth-it.md) and the [frame-rate experiment](lessons/O-frame-rate-experiment.md) done ([E1–E2](lessons/E1-E2-packets-to-frame.md), [E3](lessons/E3-bytes-to-numbers.md), [E4](lessons/E4-numbers-to-cube.md), [E5](lessons/E5-cube-to-accelerator.md), [E6](lessons/E6-whole-path.md)) |
 
 ### FPGA and hardware acceleration ([section](fpga-acceleration/))
 | Track | Progress | |
@@ -69,6 +69,8 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 | 2026-11-06 | Ethernet demo | E1–E2 done: packet header, placing bytes with `//` and `%`, lost packets |
 | 2026-11-06 | Ethernet demo | E3 done: bytes → signed 16-bit numbers → Q-first I/Q samples |
 | 2026-11-06 | Ethernet demo | E4 done: sample arrival order, reshape into the (chirp, RX, sample) cube |
+| 2026-11-08 | Ethernet demo | [Frame-rate experiment](lessons/O-frame-rate-experiment.md): found the processing and capture limits, the receive-buffer delay, and that a higher frame rate fixes fast-motion speed readings |
+| 2026-11-07 | Ethernet demo | O1–O2 done: decode ≈ 5.5 ms on the ARM; at 20 fps not worth optimizing; for higher fps try a 4-core split first, then Ethernet in the fabric |
 | 2026-11-06 | Ethernet demo | E5 done: cube into the accelerator; spotted the integer → float → integer middleman |
 | 2026-11-06 | Ethernet demo | E6 done: whole path and who does what. Part 1 (the path) finished |
 
@@ -86,7 +88,7 @@ Done: [K1 LVDS](lessons/K1-lvds.md) · [K2 serial protocols](lessons/K2-serial-p
 ## Up next
 
 **Ethernet demo** (current focus)
-- O1: measure each step on the Kria. [Plan](ethernet-demo/PLAN.md)
+- Optional: 4-core split (capture in its own process) to go above ~67 fps; coordinate with the lab member who owns the code. [Plan](ethernet-demo/PLAN.md)
 
 **DCA1000 removal** (on hold)
 - [Cube bridge](dca1000-removal/CUBE-BRIDGE.md): C0–C4 done, C4 ran on the Kria 2026-11-02. C5–C6 on hold after the pivot.
